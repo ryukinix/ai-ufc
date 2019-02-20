@@ -1,0 +1,119 @@
+#+STARTUP: showall align
+#+OPTIONS: todo:nil tasks:("IN-PROGRESS" "DONE") tags:nil num:nil toc:nil
+#+AUTHOR: Manoel Vilela
+#+TITLE: Inteligência Computacional @@latex:\\@@ 01 - História
+#+DATE: <2019-02-20 Wed 15:45>
+#+EXCLUDE_TAGS: TOC_3
+#+LANGUAGE: bt-br
+#+LATEX_HEADER: \usepackage[]{babel}
+#+LATEX_HEADER: \usepackage{indentfirst}
+#+LATEX_HEADER: \renewcommand\listingscaption{Código}
+
+
+* O que é IA?
+
+Visões comuns aceitas sobre IA podem ser enquadradas:
+
++ (Agir|Pensar) como humanos
++ (Agir|Pensar) racionalmente
+
+* Agir como humanos (Teste de Turing)
+
++ Test de Turing (1950): definição operacional de inteligência.
++ Para passar no teste de turing o computador precisa ter as seguintes
+  habilidades:
+  + Processamento de linguagem natural (NLP)
+  + Representação de conhecimentos
+  + Raciocínio automatizado
+  + Aprendizado de máquina
++ Teste de Turing total
+  + Visão de computador
+  + Robótica
+
+* Pensar como humanos
+
++ Abordagem baseada na modelagem cognitiva
++ Introspecção, experimentos psicológicos
++ Requer teorias sobre as atividades internas do cérebro humano
++ Exemplo de área de aplicação: visão computacional.
+
+* Pensar racionalmente
+
++ Aristóteles se preocupou com as leis do pensamento
+  que governariam a operação da mente;
++ IA baesada na lógica e na filosofia;
++ Problemas:
+  - Formalização de conhecimento informal em cenários que envolvem
+    incerteza.
+  - Ser capaz de resolver um problema na teoria não significa que de
+    fato pode-se resolvê-lo na prática
+
+
+* Pensar racionalmente
+
++ Comportamento racional: fazendo a 'coisa certa'
++ O que é a 'coisa certa'?
++ As habilidades do teste de Turing existem para permitir ações
+  racionais
++ Fazer a coisa certa é por vezes inviável em ambientes complicados
++ Projetar o melhor programa possível, levando-se em conta as
+  limitações em termos de recursos computacionais
+
+* Os fundamentos de IA
+
++ Filosofia (de 428 a.C até a atualidade)
+  + Aristóteles (384-322 a.C): sistema informal silogismos.
+  + Ramon Lull (1315): raciocínio útil como artefato mecânico.
+  + Wilhelm Shickard (1592-1615) e Blaise Pascal (1623-1662): primeiras
+    máquinas de calcular.
+  + Dualismo x Materialismo.
+  + Emprisimo: teve início na obra de Francis Bacon (1561-1626).
++ Matemática (cerca de 800 até a atualidade)
+  + George Boole (1815-1864) e Gottlobe Frege (1848-1925):
+    formalização matemática da lógica
+  + Boole e outros discutiram algoritmos para dedução lógica
+    + David Hilbert (1862-1943): lista de 23 problemas
+    + Kurt Godel (1906-1978): teorema da incompletude
+    + Alan Turing: não-computabilidade
+  + Indecibilidade, não-computabilidade e intratabilidade
+  + Probabilidade: contribuições de Gerolamo Cardano, Pierre de
+    Fermat, Blaise Pascal e Thomas Bayes.
++ Economia (de 1776 até a atualidade)
+  + Adam Smith (1723-1790): An inquiry into the nature and causes of
+    wealth of nations
+  + Teoria da decisão
+  + Teoria dos jogos
+  + Algumas outras...
++ Neurociência (1861 até a atualidade)
+  + O que é neurociência?
+  + Paul Broca (1824-1880): estudo da afasia;
+  + Camilo Golgi (1843-1929) técnica de coloração de neurônios;
+  + Ramon y Cajal (1852-1934) estudos pineiros dos neurônios;
+  + Hans Berger: invenção de eletroencefalógrafo (EEG) em 1929;
+  + Cerébro e computadores digitais
++ Psciologia (1879 até a atualidade)
+  + Origem nos trablahos de Hermann von Helmholtz e de Wilhelm Wundt (1832-1920)
+  + John Watson (1878-1958): movimento behaviorista
+  + Frederic Bartlett (1886-1969): retorno da pscicologia
+  + Kenneth Craik (1943): retorno da legitimidade de termos mentais
+  + Ciência cognitiva: início no seminário do MIT de 1956 com George
+    Miller, *Noam Chomsky*, Allen Newell e Herbert Simon.
++ Engenharia de computadores (de 1940 até a atualidade)
+  + IA = inteligência + artefato
+  + Máquina eletrônica de Help Robinson (1940): segunda guerra mundial
+  + Z-3 (1941): primeiro computador programável, criado por Konrad
+    Zuse.
+  + ENIAC: parte de um projeto militar.
+  + Dívida da IA com a área de software e vice-versa.
++ Linguística (de 1957 até atualidade)
+  + B.F. Skinner (1957): Verbal behavior
+  + Noam Chomsky: Syntactic structures
+  + A linguística e a IA "nasceram" aproximadamente na mesmo época
+  + A compreensão da linguagem se mostrou mais complexos do que
+    parecia (1957)
+
+** Tipos de problemas
+
++ Problemas não-computáveis (nem o valor dá pra pegar)
++ Problemas indecidíveis (halting problem)
++ Problemas intratáveis (NP)

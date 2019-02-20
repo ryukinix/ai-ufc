@@ -1,0 +1,31 @@
+#+STARTUP: showall align
+#+OPTIONS: todo:nil tasks:("IN-PROGRESS" "DONE") tags:nil num:nil toc:nil
+#+AUTHOR: Manoel Vilela
+#+TITLE: Inteligência Computacional @@latex:\\@@ Cronograma
+#+DATE: <2019-02-20 Wed 15:45>
+#+EXCLUDE_TAGS: TOC_3
+#+LANGUAGE: bt-br
+#+LATEX_HEADER: \usepackage[]{babel}
+#+LATEX_HEADER: \usepackage{indentfirst}
+#+LATEX_HEADER: \renewcommand\listingscaption{Código}
+
+* Sistema de avaliação
+
+#+BEGIN_LATEX latex
+\begin{equation}
+NF = \dfrac{(AP_1 + T_1 + T_2 + ... + T_n)}{n + 1}
+\end{equation}
+#+END_LATEX
+
+* Pilares
+
++ ANN
++ Algoritmos Géneticos
++ Lógica Fuzzy
+
+
+* Bibliografia
+
++ Inteligência Artificial, Russel e Norvig, 2ª Edição (2004) {1}
++ Inteligência Computacional Aplicada, Galdeira V. (?)
++ Algoritmos Genéticos, Ricardo Linder {3}
