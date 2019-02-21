@@ -1,0 +1,25 @@
+#+STARTUP: showall align
+#+OPTIONS: todo:nil tasks:("IN-PROGRESS" "DONE") tags:nil num:t
+#+AUTHOR: Manoel Vilela
+#+TITLE: Inteligência Computacional @@latex:\\@@ Resumo
+#+DATE: <2019-02-20 Wed 15:45>
+#+EXCLUDE_TAGS: TOC_3
+#+LANGUAGE: bt-br
+#+LATEX_HEADER: \usepackage[]{babel}
+#+LATEX_HEADER: \usepackage{indentfirst}
+#+LATEX_HEADER: \renewcommand\listingscaption{Código}
+
+* Descrição
+
+Warning: everything in this repository is written in Brazillian
+Portuguese. Be careful.
+
+Aqui você encontrará as minhas principais notas das disciplina de IC.
+
+* Cronograma
+
+#+INCLUDE: 00-cronograma.org :lines "10-" :minlevel 2
+
+* História
+
+#+INCLUDE: 01-historia.org :lines "10-" :minlevel 2
