@@ -9,13 +9,9 @@
 #+LATEX_HEADER: \usepackage{indentfirst}
 #+LATEX_HEADER: \renewcommand\listingscaption{Código}
 
-* Sistema de avaliação
-
-#+BEGIN_LATEX latex
-\begin{equation}
+#+BEGIN_equation latex
 NF = \dfrac{(AP_1 + T_1 + T_2 + ... + T_n)}{n + 1}
-\end{equation}
-#+END_LATEX
+#+END_equation
 
 * Pilares
 
