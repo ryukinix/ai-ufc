@@ -1,0 +1,108 @@
+#+STARTUP: showall align
+#+OPTIONS: todo:nil tasks:("IN-PROGRESS" "DONE") tags:nil num:nil toc:nil
+#+AUTHOR: Manoel Vilela
+#+TITLE: Inteligência Computacional @@latex:\\@@ Busca
+#+DATE: <2019-02-22 Fri>
+#+EXCLUDE_TAGS: TOC_3
+#+LANGUAGE: bt-br
+#+LATEX_HEADER: \usepackage[]{babel}
+#+LATEX_HEADER: \usepackage{indentfirst}
+#+LATEX_HEADER: \renewcommand\listingscaption{Código}
+
+* Estrutura de Apresentação
+
++ Tipos de problemas
+  + Estados únicos (totalmente *observável*)
+  + Os ambientes devem ser *discretos* e *determínisticos*
++ Formulação do Prolbema
+  + Problema exemplo
++ Algoritmos de Busca Básicos
+  + Não informados
+
+* Introdução
+
++ Estudaremos um paradigma para resolução de problemas
++ Encontrar soluções por meio da geração sistemática de novos estados,
+  os quais são testados a fim de se verificar se correspondem a
+  solução do problema
++ Assume-se que o raciocínio se reduz à busca
++ Abordagem eficiente para uma série de problemas práticos
+  (principalmente nas versões infromadas).
+
+* Elementos
+
++ ESTADOS
++ AÇÕES
++ CUSTOS
++ METAS
+
+* Exemplos de Problemas
+
++ Busca de melhor rota entre dois pontos
++ Busca de solução jogo 8-puzzle
++ Busca de solução jogo 8-rainhas
++ Problemas NP-Completo em Geral
+
+* Estratégias
+
+Uma estratégia de busca é basicamente uma ordem de expansão de nodos.
+
+** Medidas
+
++ Completude: sempre encontra uma solução (se existir)?
++ Otimalidade: Sempre encontra a solução de custo mais baixo?
++ Complexidade tempo: Número de nodos explorados?
++ Complexidade espaço: Número de nodos armazenados?
+
+Relações causais:
++ Ótimo => Completo
++ Completo /=> Ótimo
+
+Complexidade usualmente medida em função da dificuldade do problema:
++ b: máximo fator de ramificação da árvore de busca
++ d: profunidade da solução de menor custo
++ m: máxima profnuidade do espaço de estados (pode ser \( \ \))
+
+** TODO Busca em Árvore
+
+Diferenças entre nós e estados:
+
+A função g(x), custo do caminho, conta o peso das arestas
+enquanto a profunidade é o número de arestas para chegar no nó x.
+
+** Não-informadas
+
+Também deonomiadas de busca cega: usam estritamente a informação
+disponível na formulação do problema
+
+*** Busca em Largura
+
+Expansão do nodo mais raso.
+
+
+Ordem de busca: De cima pra baixo, esquerda para direita.
+
++ Completude:
+  + Sempre encontra uma solução?
+  + SIM (se existir)
+    + Se o nó meta mais raso estiver em profunidade finida /d/.
+    + Condição: b finito (max. no. nodos sucessos finito).
+
+
++ Otimalidade:
+  + Sempre encontra  solução de menor custo?
+  + Apenas se os custos dos caminhos até uma dada profunidade forem
+    iguais e menores do que aqueles para profunidades maiores
+  + Condições: arestas positivas iguais por mesmo nível, custo da
+    camada não-decrescente g(x).
+
+Complexidade de tempo: exponencial \( O(b^{d+1}) \)
+Complexidade de memória: exponencial \( O(b^{d+1}) \)
+
+*** Busca em Profunidade
+
+***
+
+* Dúvidas
+
++ Qual a diferença entre problemas NP-Completo e NP-Hard?
