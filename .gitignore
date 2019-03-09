@@ -1,3 +1,4 @@
 *.pdf
 *_minted*
 *.tex
+/books
