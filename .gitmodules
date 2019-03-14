@@ -1,0 +1,3 @@
+[submodule "vendor/ds-ufc"]
+	path = vendor/ds-ufc
+	url = git@github.com:ryukinix/data-structures-ufc.git
