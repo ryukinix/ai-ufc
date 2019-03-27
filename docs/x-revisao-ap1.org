@@ -1,0 +1,241 @@
+#+STARTUP: showall align
+#+OPTIONS: todo:nil tasks:("IN-PROGRESS" "DONE") tags:nil num:t toc:t
+#+AUTHOR: Manoel Vilela
+#+TITLE: Inteligência Computacional @@latex:\\@@ Revisão AP1
+#+DATE: <2019-03-24 Sun>
+#+EXCLUDE_TAGS: IGNORE
+#+LANGUAGE: bt-br
+#+LATEX_HEADER: \usepackage[]{babel}
+#+LATEX_HEADER: \usepackage{indentfirst}
+#+LATEX_HEADER: \renewcommand\listingscaption{Código}
+
+
+* Revisão AP1 :IGNORE:
+
++ Busca cega (sem informação)
+  + Busca em Largura
+  + Busca em Profundidade
+  + Busca em Profundidade Limitada
+  + Busca em Profundidade Iterativa
+  + Busca em Uniforme
+  + Busca bidirecional
++ Busca informada
+  + Busca Gulosa
+  + Busca A*
++ Busca Local e Otimização
+  + Subida de Monteiro (Hill Climbing)
+  + Têmpera Simulada (Simulated Annealing)
+  + Busca em Feixe Local (Local Beam Search)
++ Agentos lógicos
+  + Modelos de mundo
+  + Regras de inferência
+  + Base de Conhecimento & Sentença
+  + Tabela verdade dos modelos
+  + Consistente e Completo
+
+
+* Busca Cega
+
+São buscas que não consideram informações externas ao sistema.
+
+b: branch
+d: depth
+m: máxima profundidade que um ramo qualquer pode alcançar
+
+** Busca em Largura
+
++ Complexidade de Tempo: \( O(b^d) \)
++ Complexidade de Espaço: \( O(b^d) \)
++ Completude: Se a árvore tiver profundidade finita.
++ Otimalidade: Se os custos forem monotônico crescente.
+
+** Busca em Profundidade
+
++ Complexidade de Tempo: \( O(b ^ m) \)
++ Complexidade de Espaço: \( O(b \cdot m) \)
++ Completude: Não é completo, porque pode ficar preso num ramo.
++ Otimalidade: Se nem é completa, não pode ser ótima.
+
+** Busca em Profundidade Limitada
+
++ Complexidade de Tempo: \( O(b ^ l) \)
++ Complexidade de Espaço: \( O(b \cdot l) \)
++ Completude: Se l > d a estratégia não é ótima.
++ Otimalidade: Se l <  d então a estratégia não é completa
+
+** Busca em Profundidade Iterativa
+
++ Complexidade de Tempo: \( O(b ^ l) \)
++ Complexidade de Espaço: \( O(b \cdot l) \)
++ Completude: É completo quando o fator de ramificação é finita
++ Otimalidade: É ótima quando o custo é monoticamente crescente.
+
+** DONE Busca Uniforme
+   CLOSED: [2019-03-27 Wed 13:15]
+
+Igual a busca em largura! Mas considerando o custo variar de acordo com o
+caminho.
+
+g(n) é a função de custo do caminho.
+
+** Busca Bidirecional
+
++ Complexidade de Espaço: \( O(\sqrt{b^d}) \)
++ Complexidade de Tempo: \( O(\sqrt{b^d}) \)
++ Otimalidade: indefinido
++ Completude: indefinido
+
+* Busca Informada
+
+Utiliza heurísticas para aumentar a eficiência da busca.
+
+** Busca Gulosa
+
+\( h(n = G) = 0 \)
+
+\( f(n) = h(n) \)
++ h(n) é a função heurística
++ f(n) é a função de custo do algoritmo
++ Completude: Não é completa
++ Otimalidade: Se não é completa, não é ótima
++ Complexidade de Espaço e Tempo é \( O(b^m) \).
+
+Ela não é ótima porque pode entrar em loops indefinidos.
+
+** Busca A*
+
+\( f(n) = g(n) + h(n) \)
+
+\( h(G) = 0 \)
+
++ Completude: É completo
++ Otimalidade: É ótimo
++ Complexidade de Espaço e Tempo é \( O(b^m) \)
+
+Mas é completo excento quando há um número infinito de nós com \( f <=
+f(G) \)
+
+(G) Goal = Objetivo
+** Problema relaxado
+
+Quando você remove algumas restrições sobre as ações do problema.
+
+* Busca Local e Otimização
+
+Os algoritmos de busca local e otimização não se importam com os
+meios, apenas com os fins. A ideia é que seja uma f(x) uma função
+objetivo, queremos maximizar seus valores.
+
+
+** DONE Hill Climbing
+   CLOSED: [2019-03-27 Wed 13:02]
+
+O algoritmo de hill climbing, podendo ser traduzido de subida de
+morro, assemelha-se a ideia de um algoritmo guloso: ele vai criar os
+nós de vizinhaça e caminhar por onde há subida.
+
+Existe duas estratégias:
+
++ First Choice: Escolha Aleatória
++ Random Start: Início Aleatório
+
+Random start só pode ser ótimo na teoria, na prática não há
+reinicialização suficiente que garanta sua otimalidade.
+
+A ideia de início aleatório pode-se imaginar mandando vários
+paraquedistas vendados numa região montanhosa; o objetivo é chegar até
+o topo!
+
+Em outras palavras, não é ótimo e nem completo! Mas pode conseguir
+várias soluções com globais máximos com estratégias de random start e
+reinícios.
+
+** DONE Simulated Annealing
+   CLOSED: [2019-03-27 Wed 13:06]
+Trata-se de um algoritmo capaz de encontrar ótimos locais permitindo
+movimentos ruins.
+
+Ideia principal é decrescer gradualmente a frequência desses
+movimentos.
+Funciona bem se o decrescimento for lento o suficiente para a solução
+num vale não escapar.
+
+A estratégia é de minimização invés de maximização (importante
+detalhe!).
+
+Origem da ideia foi na metalurgia.
+
+É necessário criar uma função \(P(t, s)\) onde tal função retorna uma
+probabilidade de movimento entre \([0,1]\). t é a temperatura e s é a
+nota do estado, quão bom ele é pro problema.
+
+Um evento aleatório é gerado sobre p para um movimento ser aceito ou
+não.
+
+f possui estratégia que fnucionam para vários problemas e a nota de
+estado depende do problema.
+
+** DONE Local Beam Search
+   CLOSED: [2019-03-27 Wed 13:08]
+
+Também conhecimento como Busca de Feixe Local possui a ideia
+semelhante ao hill climbing mas gerando k estados simultâneos em vez
+de um 1.
+
+Algoritmo:
+
+1. Começa com k estados aleatórios
+2. A cada iteração todos os sucessores de todos os k são gerados
+3. Se alguém dos estados gerados for o estado meta, o algoritmo para;
+   senão, selecionar os k melhores sucessores e repetir o processo.
+4. Há comunicação entre os estados! (
+
+* Agentos Lógicos
+
+** Modelos de mundo
+
+São todos os possíveis modelos gerados na combinação de possibilidades.
+
+** Regras de inferência
+
+São regras para inferência:
+
++ Modus Ponens (p, p -> q) => q
++ Silogismo Disjuntivo: (~ p, p v q) => q
++ Silogismo Hipotético: (p -> q, q -> r) => p -> r
++ Modus Tollens (p, ~ p -> q) => ~q
++ Resolução Conjuntiva: (p v q, ~ p v r) => q v r
+
+** Base de Conhecimento & Sentença
+
+   \(BC \implies \alpha\)
+
++ BC: Base conhecimento
++ alfa é sentença.
+
+** Tabela verdade dos modelos
+
+Geração de tabela verdade.
+
+** Consistência e Completo
+
+Consistência: As soluções dadas são todas corretas.
+Completo: As soluções dadas são todas possíveis.
+
+** Limitações da Lógica Proposicional
+
++ Falta de Expressividade
++ Dificuldade de modelar o mundo num simples conjunto de dois estados
++ Explosão exponencial / Combinatorial
+
+* Dúvidas
+
++ O que diabos é m? R: Quando a árvore gerada é finita, é o valor
+  máximo que a árvore pode expandir em profundidade.
++ Problema relaxado, busca informada e a heurística nunca poder
+  superestimar? R: Conceito de heurística admissível: a heurística
+  nunca pode superestimar g(n), apenas subestimar!
++ Hill Climbing com reinício automático é ótimo? Isto é, *sempre*
+  alcança o máximo/mínimo global? R: NÃO! Não é garantido tal coisa, o
+  reinício automático pode fazer com que chegue em vários máximos
+  locais, mas não é garantido que chegue sempre ao máximo global!
