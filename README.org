@@ -18,12 +18,12 @@ Aqui você encontrará as minhas principais notas das disciplina de IC.
 
 * Cronograma
 
-#+INCLUDE: 00-cronograma.org :lines "10-" :minlevel 2
+#+INCLUDE: docs/00-cronograma.org :lines "10-" :minlevel 2
 
 * História
 
-#+INCLUDE: 01-historia.org :lines "10-" :minlevel 2
+#+INCLUDE: docs/01-historia.org :lines "10-" :minlevel 2
 
 * Busca
 
-#+INCLUDE: 02-busca.org :lines "10-" :minlevel 2
+#+INCLUDE: docs/02-busca.org :lines "10-" :minlevel 2
