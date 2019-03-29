@@ -63,6 +63,11 @@ m: máxima profundidade que um ramo qualquer pode alcançar
 + Completude: Se l > d a estratégia não é ótima.
 + Otimalidade: Se l <  d então a estratégia não é completa
 
++ l < d: nem completo e nem ótimo
++ l >= d: completo
++ l = d: completo e ótimo
+
+
 ** Busca em Profundidade Iterativa
 
 + Complexidade de Tempo: \( O(b ^ l) \)
