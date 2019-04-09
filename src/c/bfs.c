@@ -14,47 +14,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "graph.h"
 #define N 1000
-#define V 9
-#define V_MAX (1 << 9)
-#define Z -1 // not exists
-
-typedef enum vertex {
-    A, B, C, D, E, F, G, H, I
-} Vertex;
-
-
-int graph[V][V] = {
-    {0, 1, Z, Z, Z, 1, Z, Z, Z}, // A
-    {1, 0, 1, 1, Z, Z, Z, Z, Z}, // B
-    {Z, 1, 0, 1, Z, Z, 2, Z, Z}, // C
-    {Z, 1, 1, 0, 1, Z, Z, Z, Z}, // D
-    {Z, Z, Z, 1, 0, Z, Z, 1, Z}, // E
-    {1, Z, Z, Z, Z, 0, Z, Z, 1}, // F
-    {Z, Z, 2, Z, 1, Z, 0, Z, Z}, // G
-    {Z, Z, Z, Z, 1, Z, Z, 0, 1}, // H
-    {Z, Z, Z, Z, Z, 1, Z, 1, 0}, // I
-    /*A B  C  D  E  F  G  H  I*/
-
-};
 
 static int path[N];
-
-char vertex_label(int k) {
-    switch (k) {
-    case 0: return 'A';
-    case 1: return 'B';
-    case 2: return 'C';
-    case 3: return 'D';
-    case 4: return 'E';
-    case 5: return 'F';
-    case 6: return 'G';
-    case 7: return 'H';
-    case 8: return 'I';
-    default: return 'X';
-    }
-}
-
 
 void init(int v[], int n) {
     for (int i = 0; i < n; i++) {
@@ -64,7 +27,7 @@ void init(int v[], int n) {
 
 void print_vec(int v[], int n) {
     for (int i = 0; i < n && v[i] != Z; i++) {
-        printf("\n%d -> %c", i, vertex_label(v[i]));
+        printf("%c ", vertex_label(v[i]));
     }
     puts("");
 }
@@ -117,60 +80,90 @@ int heap_right_child(int n) {
 
 
 void bfs(Vertex s, Vertex g) {
-
+    printf("=> SEARCH: (%c, %c)\n", vertex_label(s), vertex_label(g));
     // variables
     int lookup[V_MAX]; // fila
-    int memory[V_MAX]; // fila
     int lookup_size = 0;
-    int memory_size = 0;
+    int memory[V][V]; // backtracking
     int local_path[V];
+
 
     // initialziation
     init(local_path, V);
     init(lookup, V_MAX);
-    init(memory, V_MAX);
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            memory[i][j] = i == j? 0 : Z;
+        }
+    }
     // breadth first search of (s, g) on matrix graph
     Vertex current_node =  s;
-    memory[0] = s;
+    Vertex last_node = s;
     //printf("NODES: %d ", s);
+    puts(":: START SEARCH");
     do {
         for(int i = 0; i < V; i++) {
             int neighbor = graph[i][current_node];
-            if(neighbor > 0 && !vec_in(memory, V_MAX, i)) {
-                //printf("(%d->%d)\n", current_node, i);
+            if(neighbor > 0 && memory[i][current_node] == Z) {
+                printf("%c->%c\n", vertex_label(current_node), vertex_label(i));
                 queue_push(lookup, V_MAX, i);
                 lookup_size++;
+                memory[i][current_node] = last_node+1;
+                memory[current_node][i] = last_node+1;
             }
         }
+        last_node = current_node;
         current_node = queue_pop(lookup, V_MAX);
         lookup_size--;
-        if (!vec_in(memory, V_MAX, (int) current_node)) {
-            queue_push(memory, V_MAX, current_node);
-            memory_size++;
-        }
-        //printf("%d ", current_node);
     } while (current_node != g);
+    puts(":: END SEARCH");
+
+    puts("=> MEMORY");
+
+
+    printf("   ");
+    for(int i = 0; i < V; i++) {
+        printf("%c  ", vertex_label(i));
+    }
     puts("");
 
-    int heapp = memory_size;
-    int i;
-    local_path[0] = memory[heapp];
-    for(i = 1; heapp > 0; i++) {
-        heapp /= 2;
-        local_path[i] = memory[heapp];
+
+    for (int i = 0; i < V; i++) {
+        printf("%c ", vertex_label(i));
+        for (int j = 0; j < V; j++) {
+            int v = memory[i][j];
+            if (v == 0) {
+                printf("%2d ", v);
+            } else {
+                printf("%2c ", vertex_label(v-1));
+            }
+        }
+        puts("");
     }
 
-    for(int j = 0; j <= i; j++) {
-        path[j] = local_path[i - j - 1];
+    // backtracking
+    puts(":: START BACKTRACKING");
+    local_path[0] = g;
+    int k = 1;
+    while (current_node != s) {
+        for (int i = 0; i < V; i++) {
+            int cost = memory[current_node][i];
+            if (cost > 0 && !vec_in(local_path, V, i)) {
+                local_path[k] = i;
+                current_node = i;
+                break;
+            }
+        }
+        printf("=> %c->%c\n", vertex_label(local_path[k-1]), vertex_label(local_path[k]));
+        k++;
     }
+    puts(":: END BACKTRACKING");
 
-    printf("MEMORY SIZE: %d\n", memory_size );
-    printf("MEMORY: ");
-    print_vec(memory, V_MAX);
-
-    /* printf("LOOKUP SIZE: %d\n", lookup_size ); */
-    /* printf("LOOKUP: "); */
-    /* print_vec(lookup, V_MAX); */
+    puts(":: START PATH REVERSE");
+    for(int j = 0; j < k; j++) {
+        path[j] = local_path[k - j - 1];
+    }
+    puts(":: END PATH REVERSE");
 }
 
 int main(void) {
@@ -178,7 +171,7 @@ int main(void) {
     Vertex g = C;
     init(path, N);
     bfs(s, g);
-    printf("=> PATH: (%c, %c)\n", vertex_label(s), vertex_label(g));
+    printf("PATH: ");
     for(int i = 0; path[i] != Z; i++) {
         printf("%c ", vertex_label(path[i]));
     }
