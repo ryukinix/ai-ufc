@@ -41,6 +41,30 @@ int vec_in(int v[], int n, int k) {
     return 0;
 }
 
+
+void debug_memory(int memory[V][V]) {
+    puts("=> MEMORY");
+    printf("   ");
+    for(int i = 0; i < V; i++) {
+        printf("%c  ", vertex_label(i));
+    }
+    puts("");
+
+    for (int i = 0; i < V; i++) {
+        printf("%c ", vertex_label(i));
+        for (int j = 0; j < V; j++) {
+            int v = memory[i][j];
+            if (v == 0) {
+                printf("%2d ", v);
+            } else {
+                printf("%2c ", vertex_label(v-1));
+            }
+        }
+        puts("");
+    }
+
+}
+
 void queue_push(int v[], int n, int value) {
     int i;
     if (v[0] == Z) {
@@ -108,6 +132,7 @@ void bfs(Vertex s, Vertex g) {
                 printf("%c->%c\n", vertex_label(current_node), vertex_label(i));
                 queue_push(lookup, V_MAX, i);
                 lookup_size++;
+                // FIXME: backtracking logic is incorrect
                 memory[i][current_node] = last_node+1;
                 memory[current_node][i] = last_node+1;
             }
@@ -117,29 +142,8 @@ void bfs(Vertex s, Vertex g) {
         lookup_size--;
     } while (current_node != g);
     puts(":: END SEARCH");
+    debug_memory(memory);
 
-    puts("=> MEMORY");
-
-
-    printf("   ");
-    for(int i = 0; i < V; i++) {
-        printf("%c  ", vertex_label(i));
-    }
-    puts("");
-
-
-    for (int i = 0; i < V; i++) {
-        printf("%c ", vertex_label(i));
-        for (int j = 0; j < V; j++) {
-            int v = memory[i][j];
-            if (v == 0) {
-                printf("%2d ", v);
-            } else {
-                printf("%2c ", vertex_label(v-1));
-            }
-        }
-        puts("");
-    }
 
     // backtracking
     puts(":: START BACKTRACKING");
