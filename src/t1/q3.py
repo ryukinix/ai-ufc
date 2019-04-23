@@ -148,8 +148,8 @@ def main():
     plt.scatter(x, y, color='black', s=2)
     ax = plt.gca()
     ax.set_title("Regressão")
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
+    ax.set_xlabel("x: velocidade do vento")
+    ax.set_ylabel("y: potência gerada")
     ax.legend()
     plt.savefig("q3-regression.png", figsize=(10, 8))
 
