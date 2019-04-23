@@ -1,0 +1,124 @@
+#+STARTUP: showall align
+#+OPTIONS: todo:nil tasks:("IN-PROGRESS" "DONE") tags:nil num:nil toc:nil
+#+AUTHOR: Manoel Vilela
+#+TITLE: Inteligência Computacional - UFC (2019.1) @@latex:\\@@ T1
+#+EXCLUDE_TAGS: TOC_3
+#+LANGUAGE: bt-br
+#+LATEX_HEADER: \usepackage[]{babel}
+#+LATEX_HEADER: \usepackage{indentfirst}
+#+LATEX_HEADER: \renewcommand\listingscaption{Código}
+#+LATEX_CLASS:  article
+
+* Descrição
+
+Este trabalho contém uma exploração dos tópicos:
+
++ Busca Local e Optimização
++ Lógica Fuzzy
++ Regressão
+
+A linguagem escolhida para o desenvolvimento é Python, versão 3.6 no
+mínimo. É recomendado instalar a distribuição Python Anaconda,
+disponível no sítio: https://www.anaconda.com/distribution/.
+
+Esta distribuição já possui os pacotes NumPy e Matplotlib que estarei
+utilizando para realizar operações de álgebra linear, matrizes e
+geração de gráficos.
+
+* Q1
+
+A função do trabalho possuí múltiplos máximos globais e locais por ser
+uma função periódica. Tal função também por ser multivariável, gerará
+um gráfico num espaço tridimensional. Alguns gŕaficos interessantes
+mostrando a região de interesse poderá ser vista a seguir:
+
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Gerado pelo wolframalpha, a partir de https://bit.ly/2Gw4JVm
+[[file:q1-3dplot.png]]
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Visualização com linhas de contorno, é possível observar os máximos nos polos mais quentes isolados
+[[file:q1-polos.png]]
+
+
+
+A variação dos máximos foram entre 18 e 28 em alguns experimentos
+rodados para o valor de f(x, y). Os gráficos com a subida de morro
+(hill climbing) pode ser vista nos próximos três gráficos.
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Máximo local 1.
+[[file:q1-local.png]]
+
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Máximo local 2.
+[[file:q1-local2.png]]
+
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Maior máximo alcançado nos experimentos.
+[[file:q1-global.png]]
+
+
+O modo de reinício aleatório não foi implementado diretamente, o
+usuário se quiser um novo nó deverá rodar novamente. Apesar disso,
+nesta implementação o nó gerado inicialmente sempre será
+pseudo-aleatório. As buscas foram realizado de forma restrita no intervalo sugerido ~[0, 20]~.
+
+
+* Q2
+
+Assim como explicado em sala de aula, essa questão foi desenvolvida
+utilizado a inferência de Mamdami. A implementação mais uma vez é em Python.
+
+* Q3
+
+
+Em Python o operador ~@~ é utilizado pra realizar multiplicação entre
+matrizes, enquanto o operador ~*~ é reservado para fazer multiplicação
+de elementos ponto-a-ponto. Por esse motivo o cálculo da
+pseudo-inversa foi realizada utilizando o operador ~@~ , dado que as
+operações envolvem matrizes usando a biblioteca NumPy.
+
+As curvas mais interessantes são a de k=4 e k=5, no entanto para k=5 é
+observado uma mínima melhoria no R²aj.
+
+A seguir é demonstrado o resultado textual do programa assim como o
+gráfico.
+
+#+BEGIN_EXAMPLE
+
+RESULTS REGRESSION k=2
+-----------------------
+RMSE:	 25.08257
+  R2:	 0.94342
+R2aj:	 0.94337
+   B:	 [-92.98   26.723   1.693]
+
+RESULTS REGRESSION k=3
+-----------------------
+RMSE:	 18.5599
+  R2:	 0.96902
+R2aj:	 0.96898
+   B:	 [ 32.624 -58.76   15.052  -0.592]
+
+RESULTS REGRESSION k=4
+-----------------------
+RMSE:	 17.09358
+  R2:	 0.97372
+R2aj:	 0.97368
+   B:	 [ -0.391  10.373  -5.004   1.434  -0.068]
+
+RESULTS REGRESSION k=5
+-----------------------
+RMSE:	 17.09314
+  R2:	 0.97373
+R2aj:	 0.97367
+   B:	 [-0.18   8.164 -3.93   1.246 -0.054 -0.   ]
+#+END_EXAMPLE
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Regressões com grau de 2 a 5.
+[[file:regression.png]]
