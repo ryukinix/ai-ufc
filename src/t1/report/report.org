@@ -85,8 +85,9 @@ operações envolvem matrizes usando a biblioteca NumPy.
 As curvas mais interessantes são a de k=4 e k=5, no entanto para k=5 é
 observado uma mínima melhoria no R²aj.
 
-A seguir é demonstrado o resultado textual do programa assim como o
-gráfico.
+A seguir é demonstrado o resultado textual do programa assim como
+alguns gráfico comparativos dos modelos gerado analisando as melhorias
+no ajusto de curva e sua relevância no modelo comparado.
 
 #+BEGIN_EXAMPLE
 
@@ -121,4 +122,17 @@ R2aj:	 0.97367
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Regressões com grau de 2 a 5.
-[[file:regression.png]]
+[[file:q3-regression.png]]
+
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Comparação entre Regressão de grau 2 e 3: diferença relevante.
+[[file:q3-regression-2-3.png]]
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Comparação entre Regressão de grau  2 e 5: diferença muito relevante..
+[[file:q3-regression-2-5.png]]
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Comparação entre Regressão de grau 4 e 5: diferença pouco relevante..
+[[file:q3-regression-4-5.png]]
