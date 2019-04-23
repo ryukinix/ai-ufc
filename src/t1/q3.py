@@ -60,6 +60,7 @@ from math import sqrt
 
 
 def dataset():
+    "Carrega o dataset e devolve dois arrays: x e y."
     with open('aerogerador.dat') as f:
         data = []
         for line in f.readlines():
@@ -70,6 +71,7 @@ def dataset():
 
 
 def regression(x, y, k=1):
+    "Gera uma regressão de y em relação a x de grau k, retorna vetor beta e ŷ."
     X = np.array([x ** i for i in range(k+1)]).T
     beta = (inv(X.T @ X) @ X.T) @ y
     y_pred = X @ beta
@@ -77,6 +79,7 @@ def regression(x, y, k=1):
 
 
 def regression_report(x, y, k):
+    """Gera um relatório de uma regressão de grau k, dado x e y."""
     y_mean = np.mean(y)
     n = len(x)
     beta, y_pred = regression(x, y, k)
@@ -102,6 +105,7 @@ def regression_report(x, y, k):
 
 
 def main():
+    """Função principal."""
     print(__doc__)
     plt.close("all")
     x, y = dataset()
@@ -116,6 +120,6 @@ def main():
     ax.set_ylabel("Y")
     ax.legend()
     plt.show(block=False)
-    plt.savefig("regression.png", figsize=(10, 8))
+    plt.savefig("q3-regression-4-5.png", figsize=(10, 8))
 
 main()
