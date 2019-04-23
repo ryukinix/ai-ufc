@@ -59,6 +59,7 @@ from matplotlib import pyplot as plt
 from math import sqrt
 
 
+
 def dataset():
     "Carrega o dataset e devolve dois arrays: x e y."
     with open('aerogerador.dat') as f:
@@ -78,7 +79,7 @@ def regression(x, y, k=1):
     return beta, y_pred
 
 
-def regression_report(x, y, k):
+def generate_regression(x, y, k):
     """Gera um relatório de uma regressão de grau k, dado x e y."""
     y_mean = np.mean(y)
     n = len(x)
@@ -92,6 +93,11 @@ def regression_report(x, y, k):
     r2aj = 1 - r * aj
 
     rmse = sqrt(sum((y - y_pred) ** 2)/n)
+    return [x, y_pred, r2, r2aj, rmse, beta]
+
+
+def regression_report(x, y_pred, r2, r2aj, rmse, beta, k):
+    """Gera um relatório e gráfico de um modelo de regressão"""
     print()
     print("RESULTS REGRESSION k={}".format(k))
     print("-----------------------")
@@ -101,25 +107,61 @@ def regression_report(x, y, k):
     print("   B:\t", np.round(beta, decimals=3))
     label = 'k={} /  r2aj = {}'.format(k, round(r2aj, ndigits=5))
     plt.plot(x, y_pred, label=label)
-    return beta
 
 
 def main():
     """Função principal."""
     print(__doc__)
-    plt.close("all")
     x, y = dataset()
-    regression_report(x, y, 2)
-    regression_report(x, y, 3)
-    regression_report(x, y, 4)
-    regression_report(x, y, 5)
+    # Graus de polinômios para gerar regressões
+
+    ks = [2, 3, 4, 5]
+    regressions = []
+    for k in ks:
+        regressions.append(generate_regression(x, y, k))
+
+    # Cálculo de métricas macro
+    np.set_printoptions(precision=5)
+    np.set_printoptions(formatter={'float': '{: 0.5f}'.format})
+    t = np.array(range(ks[0], len(regressions) + ks[0]))
+    m = np.array(regressions)
+    r2 =  m[:, 2].astype(float)
+    r2aj = m[:, 3].astype(float)
+    rmse = m[:, 4].astype(float)
+    print()
+    print("== SUMMARY".format(k))
+    print("-----------")
+    print("   vec(k): ", ks)
+    print("  vec(r2): ", r2)
+    print("vec(r2aj): ", r2aj)
+    print("vec(rmse): ", rmse)
+    print("r2 - r2aj: ", r2 - r2aj)
+    print()
+
+    # Plotting
+    # fig 1: models
+    for k, regression in zip(ks, regressions):
+        regression_report(*regression, k)
+
+
+    plt.figure(1)
     plt.scatter(x, y, color='black', s=2)
     ax = plt.gca()
     ax.set_title("Regressão")
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.legend()
-    plt.show(block=False)
-    plt.savefig("q3-regression-4-5.png", figsize=(10, 8))
+    plt.savefig("q3-regression.png", figsize=(10, 8))
+
+    # # fig 2: regressions
+    plt.figure(2)
+    plt.scatter(t, r2, color='red', label='R²')
+    plt.scatter(t, r2aj, color='blue', label='R²aj')
+    ax = plt.gca()
+    ax.set_title("Métricas dos modelos")
+    ax.set_xlabel("k (grau do polinômio)")
+    ax.set_ylabel("value")
+    ax.legend()
+    plt.show()
 
 main()
