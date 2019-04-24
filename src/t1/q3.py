@@ -8,12 +8,15 @@
 #      @email: manoel_vilela@engineer.com
 #
 
-"""Regressão Múltipla
+"""
+Regressão Polinomial
 
 Notas
 -----
-Dataset: uma função linear com um ruído gaussiano de media 0 e
-variancia não-unitária.
+Dataset: aerogerador de aquiraz:
+
+x: velocidade do vento
+y: potência gerada
 
 Beta = (X'X)-¹X'*y
 ŷ(X) = X * beta
@@ -38,6 +41,10 @@ Author: Manoel Vilela
 
 Aumento do grau de Polinômios
 
+
+Métricas em sala de aula
+------------------------
+
 k(1) = 0.93
 k(2) = 0.94
 k(3) = 0.97
@@ -45,12 +52,6 @@ k(3) = 0.969
 k(4) = 0.9737242
 k(5) = 0.9737256
 
-
-Dataset de aula
-----------------
-
-x = velocidade do vento em aquiraz
-y = potencia de energia gerada
 """
 
 import numpy as np
@@ -99,8 +100,8 @@ def generate_regression(x, y, k):
 def regression_report(x, y_pred, r2, r2aj, rmse, beta, k):
     """Gera um relatório e gráfico de um modelo de regressão"""
     print()
-    print("RESULTS REGRESSION k={}".format(k))
-    print("-----------------------")
+    print("REGRESSION k={}".format(k))
+    print("---------------")
     print("RMSE:\t", round(rmse, ndigits=5))
     print("  R2:\t", round(r2, ndigits=5))
     print("R2aj:\t", round(r2aj, ndigits=5))
@@ -113,15 +114,14 @@ def main():
     """Função principal."""
     print(__doc__)
     x, y = dataset()
-    # Graus de polinômios para gerar regressões
 
+    # Graus de polinômios para gerar regressões
     ks = [2, 3, 4, 5]
     regressions = []
     for k in ks:
         regressions.append(generate_regression(x, y, k))
 
     # Cálculo de métricas macro
-    np.set_printoptions(precision=5)
     np.set_printoptions(formatter={'float': '{: 0.5f}'.format})
     t = np.array(range(ks[0], len(regressions) + ks[0]))
     m = np.array(regressions)
@@ -140,11 +140,9 @@ def main():
 
     # Plotting
     # fig 1: models
+    plt.figure(0)
     for k, regression in zip(ks, regressions):
         regression_report(*regression, k)
-
-
-    plt.figure(1)
     plt.scatter(x, y, color='black', s=2)
     ax = plt.gca()
     ax.set_title("Regressão")
@@ -153,7 +151,7 @@ def main():
     ax.legend()
     plt.savefig("q3-regression.png", figsize=(10, 8))
 
-    # # fig 2: regressions
+    # fig 2: regressions
     plt.figure(2)
     plt.scatter(t, r2, color='red', label='R²')
     plt.scatter(t, r2aj, color='blue', label='R²aj')
