@@ -17,7 +17,7 @@ intervalo entre 0 e 20. Os vizinhos de determinado estado (x, y) são
 """
 
 import numpy as np
-from matplotlib import pyplot as plt
+from matplotlib import pyplot
 from math import sin as sen
 from math import pi
 from random import randint
@@ -99,7 +99,7 @@ def hill_climbing(f, interval=(0, 20), max_steps=1000, digits=2):
     print("(x, y) -> f(x, y)")
     print("START NODE: {} -> {} ".format(start_node, start_value))
     print("BEST NODE: {} -> {}".format(best_node, best_value))
-    plt.plot(x, y, label="f(x,y) = |xsen(yπ/4) + ysen(xπ/4)|")
+    pyplot.plot(x, y, label="f(x,y) = |xsen(yπ/4) + ysen(xπ/4)|")
     label = "Start: {} → {} \n Best: {} → {}  \n".format(start_node, start_value, best_node, best_value)
     plt.plot([], [], '*', label=label)
     ax = plt.gca()
@@ -107,7 +107,7 @@ def hill_climbing(f, interval=(0, 20), max_steps=1000, digits=2):
     ax.set_xlabel("nodes(t)")
     ax.set_ylabel("objective function")
     ax.legend()
-    plt.show()
+    pyplot.show()
 
 
 def main():
