@@ -6,6 +6,7 @@
 #+LANGUAGE: bt-br
 #+LATEX_HEADER: \usepackage[]{babel}
 #+LATEX_HEADER: \usepackage{indentfirst}
+#+LATEX_HEADER: \usepackage{commath}
 #+LATEX_HEADER: \renewcommand\listingscaption{Código}
 #+LATEX_CLASS:  article
 
@@ -30,22 +31,33 @@ geração de gráficos.
 A função do trabalho possuí múltiplos máximos globais e locais por ser
 uma função periódica. Tal função também por ser multivariável, gerará
 um gráfico num espaço tridimensional. Alguns gŕaficos interessantes
-mostrando a região de interesse poderá ser vista a seguir:
+mostrando a região de interesse poderá ser vista a seguir.
+
+#+BEGIN_latex latex
+\begin{equation}
+f(x,y) = \abs{x \cdot sen(y\cdot\dfrac{\pi}{4}) + y \cdot sen(x\cdot\dfrac{\pi}{4})}
+\end{equation}
+#+END_latex
 
 
 #+ATTR_LATEX: :placement [H]
-#+CAPTION: Gerado pelo wolframalpha, a partir de https://bit.ly/2Gw4JVm
+#+CAPTION: Gráfico de supérfice gerada por \( f(x, y) \). (WolframAlpha, https://bit.ly/2UCIphO)
 [[file:q1-3dplot.png]]
 
 #+ATTR_LATEX: :placement [H]
-#+CAPTION: Visualização com linhas de contorno, é possível observar os máximos nos polos mais quentes isolados
+#+CAPTION: Visualização com linhas de contorno, é possível observar os máximos nas temperaturas mais frias isoladas.
 [[file:q1-polos.png]]
 
 
 
+Como é possível perceber nos gráficos de supérfice gerado pelo
+/WolframAlpha/, essa função é uma grande armadilha de máximos locais. Pela
+natureza períodica a função possuí infinitos máximos/mínimos locais,
+por outro lado, há apenas um máximo global na região de interesse.
+
 A variação dos máximos foram entre 18 e 28 em alguns experimentos
-rodados para o valor de f(x, y). Os gráficos com a subida de morro
-(hill climbing) pode ser vista nos próximos três gráficos.
+rodados para o valor de \( f(x, y) \). Os gráficos com a subida de
+morro (hill climbing) pode ser vista nos próximos três gráficos.
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Máximo local 1.
@@ -58,14 +70,15 @@ rodados para o valor de f(x, y). Os gráficos com a subida de morro
 
 
 #+ATTR_LATEX: :placement [H]
-#+CAPTION: Maior máximo alcançado nos experimentos.
+#+CAPTION: Máximo global no intervalo proposto.
 [[file:q1-global.png]]
 
 
 O modo de reinício aleatório não foi implementado diretamente, o
 usuário se quiser um novo nó deverá rodar novamente. Apesar disso,
 nesta implementação o nó gerado inicialmente sempre será
-pseudo-aleatório. As buscas foram realizado de forma restrita no intervalo sugerido ~[0, 20]~.
+pseudo-aleatório. As buscas foram realizado de forma restrita no
+intervalo sugerido ~[0, 20]~.
 
 
 * Q2
@@ -82,42 +95,48 @@ de elementos ponto-a-ponto. Por esse motivo o cálculo da
 pseudo-inversa foi realizada utilizando o operador ~@~ , dado que as
 operações envolvem matrizes usando a biblioteca NumPy.
 
-As curvas mais interessantes são a de k=4 e k=5, no entanto para k=5 é
-observado uma mínima melhoria no R²aj.
-
 A seguir é demonstrado o resultado textual do programa assim como
 alguns gráfico comparativos dos modelos gerado analisando as melhorias
-no ajusto de curva e sua relevância no modelo comparado.
+no ajusto de curva em relação ao crescimento do grau e sua relevância
+no modelo comparado.
 
 #+BEGIN_EXAMPLE
+== SUMMARY
+-----------
+   vec(k):  [2, 3, 4, 5]
+  vec(r2):  [ 0.94342  0.96902  0.97372  0.97373]
+vec(r2aj):  [ 0.94337  0.96898  0.97368  0.97367]
+vec(rmse):  [ 25.08257  18.55990  17.09358  17.09314]
+r2 - r2aj:  [ 0.00005  0.00004  0.00005  0.00006]
 
-RESULTS REGRESSION k=2
------------------------
+REGRESSION k=2
+---------------
 RMSE:	 25.08257
   R2:	 0.94342
 R2aj:	 0.94337
-   B:	 [-92.98   26.723   1.693]
+   B:	 [-92.98000  26.72300  1.69300]
 
-RESULTS REGRESSION k=3
------------------------
+REGRESSION k=3
+---------------
 RMSE:	 18.5599
   R2:	 0.96902
 R2aj:	 0.96898
-   B:	 [ 32.624 -58.76   15.052  -0.592]
+   B:	 [ 32.62400 -58.76000  15.05200 -0.59200]
 
-RESULTS REGRESSION k=4
------------------------
+REGRESSION k=4
+---------------
 RMSE:	 17.09358
   R2:	 0.97372
 R2aj:	 0.97368
-   B:	 [ -0.391  10.373  -5.004   1.434  -0.068]
+   B:	 [-0.39100  10.37300 -5.00400  1.43400 -0.06800]
 
-RESULTS REGRESSION k=5
------------------------
+REGRESSION k=5
+---------------
 RMSE:	 17.09314
   R2:	 0.97373
 R2aj:	 0.97367
-   B:	 [-0.18   8.164 -3.93   1.246 -0.054 -0.   ]
+   B:	 [-0.18000  8.16400 -3.93000  1.24600 -0.05400 -0.00000]
+
 #+END_EXAMPLE
 
 #+ATTR_LATEX: :placement [H]
@@ -136,3 +155,21 @@ R2aj:	 0.97367
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Comparação entre Regressão de grau 4 e 5: diferença pouco relevante..
 [[file:q3-regression-4-5.png]]
+
+
+Ao analisar o vetor de \( R^{2}_{aj}(k) \) é possível concluir que o melhor
+k é 4 porque para \( R^{2}_{aj}(4) > R^{2}_{aj}(5) \).
+
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Progressão das métricas em relação a k.
+[[file:q3-regression-metrics.png]]
+
+
+A fim de curiosidade, para \( k > 9 \) perde todo o sentido da
+regressão polinomial, pois não será melhor que a
+linear  \( k = 1 \).
+
+#+ATTR_LATEX: :placement [H]
+#+CAPTION: Para \( k > 9 \) até a regressão linear é um modelo melhor.
+[[file:q3-regression-nonsense.png]]
