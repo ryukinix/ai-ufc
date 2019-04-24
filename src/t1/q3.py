@@ -81,7 +81,7 @@ def regression(x, y, k=1):
 
 
 def generate_regression(x, y, k):
-    """Gera um relatório de uma regressão de grau k, dado x e y."""
+    """Gera os coeficientes de uma regressão de grau k, dado x e y."""
     y_mean = np.mean(y)
     n = len(x)
     beta, y_pred = regression(x, y, k)
