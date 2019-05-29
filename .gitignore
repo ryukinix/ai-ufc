@@ -1,8 +1,8 @@
 *.pdf
 *_minted*
 *.tex
-/books
-/slides
+/docs/books
+/docs/slides
 *.out
 
 *.fdb_latexmk
