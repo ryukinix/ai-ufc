@@ -8,9 +8,10 @@
 #+LATEX_HEADER: \usepackage{indentfirst}
 #+LATEX_HEADER: \usepackage{commath}
 #+LATEX_HEADER: \renewcommand\listingscaption{Código}
-#+LATEX_CLASS:  article
+#+LATEX_CLASS:  report
 
-* Descrição
+* DONE Descrição
+  CLOSED: [2019-04-23 ter 22:55]
 
 Este trabalho contém uma exploração dos tópicos:
 
@@ -19,25 +20,38 @@ Este trabalho contém uma exploração dos tópicos:
 + Regressão
 
 A linguagem escolhida para o desenvolvimento é Python, versão 3.6 no
-mínimo. É recomendado instalar a distribuição Python Anaconda,
-disponível no sítio: https://www.anaconda.com/distribution/.
+mínimo. Caso o usuário use sistemas Windows, é recomendado instalar a distribuição Python Anaconda,
+disponível no sítio: https://www.anaconda.com/distribution/. Caso seja
+algum Linux derivado do Debian, como Ubuntu e Mint, poderá ser
+realizado o seguinte comando no terminal:
 
-Esta distribuição já possui os pacotes NumPy e Matplotlib que estarei
-utilizando para realizar operações de álgebra linear, matrizes e
-geração de gráficos.
+#+BEGIN_EXAMPLE
+sudo apt install python3 python3-numpy python3-matplotlib -y
+#+END_EXAMPLE
 
-* Q1
 
-A função do trabalho possuí múltiplos máximos globais e locais por ser
+Esta distribuição Anaconda já possui os pacotes [[https://www.numpy.org/][NumPy]] e [[https://matplotlib.org][Matplotlib]] que
+estarei utilizando para realizar operações de álgebra linear, matrizes
+e geração de gráficos.
+
+* DONE Q1: Busca Local e Optimização
+  CLOSED: [2019-04-23 ter 23:13]
+
+A função desta tarefa (1) possuí múltiplos máximos globais e locais por ser
 uma função periódica. Tal função também por ser multivariável, gerará
 um gráfico num espaço tridimensional. Alguns gŕaficos interessantes
-mostrando a região de interesse poderá ser vista a seguir.
+mostrando a região de interesse poderá ser visto a seguir.
+
+
 
 #+BEGIN_latex latex
 \begin{equation}
 f(x,y) = \abs{x \cdot sen(y\cdot\dfrac{\pi}{4}) + y \cdot sen(x\cdot\dfrac{\pi}{4})}
 \end{equation}
 #+END_latex
+
+Os gráficos com a subida de morro (hill climbing) e a imagem de \(
+f(x,y \) poderá ser consultada nos próximos gráficos.
 
 
 #+ATTR_LATEX: :placement [H]
@@ -48,16 +62,6 @@ f(x,y) = \abs{x \cdot sen(y\cdot\dfrac{\pi}{4}) + y \cdot sen(x\cdot\dfrac{\pi}{
 #+CAPTION: Visualização com linhas de contorno, é possível observar os máximos nas temperaturas mais frias isoladas.
 [[file:q1-polos.png]]
 
-
-
-Como é possível perceber nos gráficos de supérfice gerado pelo
-/WolframAlpha/, essa função é uma grande armadilha de máximos locais. Pela
-natureza períodica a função possuí infinitos máximos/mínimos locais,
-por outro lado, há apenas um máximo global na região de interesse.
-
-A variação dos máximos foram entre 18 e 28 em alguns experimentos
-rodados para o valor de \( f(x, y) \). Os gráficos com a subida de
-morro (hill climbing) pode ser vista nos próximos três gráficos.
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Máximo local 1.
@@ -70,24 +74,50 @@ morro (hill climbing) pode ser vista nos próximos três gráficos.
 
 
 #+ATTR_LATEX: :placement [H]
-#+CAPTION: Máximo global no intervalo proposto.
+#+CAPTION: Máximo global no intervalo proposto encontrado pelo algoritmo /Hill Climbing/.
 [[file:q1-global.png]]
 
+A variação dos máximos foram entre 18 e 36.09 em alguns experimentos
+rodados para o valor de \( f(x, y) \).  Como é possível perceber nos
+gráficos de supérfice gerado pelo /WolframAlpha/, essa função é uma
+grande armadilha de máximos locais. Pela natureza períodica a função
+possuí infinitos máximos/mínimos locais, por outro lado, há apenas um
+máximo global na região de interesse: \( 18.09, 18.09 \).
 
-O modo de reinício aleatório não foi implementado diretamente, o
-usuário se quiser um novo nó deverá rodar novamente. Apesar disso,
-nesta implementação o nó gerado inicialmente sempre será
-pseudo-aleatório. As buscas foram realizado de forma restrita no
-intervalo sugerido ~[0, 20]~.
+Para o reinício aleatório o usuário se quiser um novo nó deverá rodar
+novamente o algoritmo. Nesta implementação o nó gerado inicialmente
+sempre será pseudo-aleatório (\( random.randint \). As buscas locais
+foram realizadas de forma restrita no intervalo sugerido ~[0, 20]~,
+portanto nós que extrapolam esse intervalo são ignorados durante a busca.
 
-
-* Q2
+* IN-PROGRESS Q2: Lógica Fuzzy
 
 Assim como explicado em sala de aula, essa questão foi desenvolvida
-utilizado a inferência de Mamdami. A implementação mais uma vez é em Python.
+utilizado a inferência de Mamdami. A implementação mais uma vez é em
+Python. A seguir poderá ser visto a saída do programa.
 
-* Q3
+#+BEGIN_EXAMPLE
+== ENTRADAS
+PRESSÃO NO PEDAL:  60
+VELOCIDADE DO CARRO:  80
+VELOCIDADE DA RODA:  55
+== FUZZY SYSTEM
+R1:  0.5
+R2:  0.19999999999999996
+R3:  0.08333333333333337
+R4:  0
+APERTE:  0.7
+LIBERE:  0.08333333333333337
+== SAÍDA
+PRESSÃO NO FREIO:  63.9143622307
+#+END_EXAMPLE
 
+* DONE Q3: Regressão Polinomial
+  CLOSED: [2019-04-23 ter 23:13]
+
+Dataset:
++ Variável de entrada \( x \): velocidade do vento em \( m/s \)
++ Variável de saída \( y \): potência gerada em \( KWatts \)
 
 Em Python o operador ~@~ é utilizado pra realizar multiplicação entre
 matrizes, enquanto o operador ~*~ é reservado para fazer multiplicação
@@ -101,7 +131,7 @@ no ajusto de curva em relação ao crescimento do grau e sua relevância
 no modelo comparado.
 
 #+BEGIN_EXAMPLE
-== SUMMARY
+== SUMÁRIO
 -----------
    vec(k):  [2, 3, 4, 5]
   vec(r2):  [ 0.94342  0.96902  0.97372  0.97373]
@@ -109,34 +139,33 @@ vec(r2aj):  [ 0.94337  0.96898  0.97368  0.97367]
 vec(rmse):  [ 25.08257  18.55990  17.09358  17.09314]
 r2 - r2aj:  [ 0.00005  0.00004  0.00005  0.00006]
 
-REGRESSION k=2
+REGRESSÃO k=2
 ---------------
 RMSE:	 25.08257
   R2:	 0.94342
 R2aj:	 0.94337
    B:	 [-92.98000  26.72300  1.69300]
 
-REGRESSION k=3
+REGRESSÃO k=3
 ---------------
 RMSE:	 18.5599
   R2:	 0.96902
 R2aj:	 0.96898
    B:	 [ 32.62400 -58.76000  15.05200 -0.59200]
 
-REGRESSION k=4
+REGRESSÃO k=4
 ---------------
 RMSE:	 17.09358
   R2:	 0.97372
 R2aj:	 0.97368
    B:	 [-0.39100  10.37300 -5.00400  1.43400 -0.06800]
 
-REGRESSION k=5
+REGRESSÃO k=5
 ---------------
 RMSE:	 17.09314
   R2:	 0.97373
 R2aj:	 0.97367
    B:	 [-0.18000  8.16400 -3.93000  1.24600 -0.05400 -0.00000]
-
 #+END_EXAMPLE
 
 #+ATTR_LATEX: :placement [H]
@@ -157,19 +186,20 @@ R2aj:	 0.97367
 [[file:q3-regression-4-5.png]]
 
 
-Ao analisar o vetor de \( R^{2}_{aj}(k) \) é possível concluir que o melhor
-k é 4 porque para \( R^{2}_{aj}(4) > R^{2}_{aj}(5) \).
-
 
 #+ATTR_LATEX: :placement [H]
-#+CAPTION: Progressão das métricas em relação a k.
+#+CAPTION: Métricas para k=4 e k=5.
 [[file:q3-regression-metrics.png]]
 
 
 A fim de curiosidade, para \( k > 9 \) perde todo o sentido da
-regressão polinomial, pois não será melhor que a
-linear  \( k = 1 \).
+regressão polinomial, pois não será melhor que a linear \( k = 1 \). A
+seguir um gráfico demonstrando essa afirmação.
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Para \( k > 9 \) até a regressão linear é um modelo melhor.
 [[file:q3-regression-nonsense.png]]
+
+
+Portanto, para finalizar, ao analisar o vetor de \( R^{2}_{aj}(k) \) é possível concluir que o melhor
+k é 4 porque para \( R^{2}_{aj}(4) > R^{2}_{aj}(5) \).

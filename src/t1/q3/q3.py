@@ -8,14 +8,12 @@
 #      @email: manoel_vilela@engineer.com
 #
 
-"""== REGRESSÃO POLINOMIAL
+"""Regressão Múltipla
 
 Notas
 -----
-Dataset: aerogerador de aquiraz:
-
-x: velocidade do vento (m/s)
-y: potência gerada (KWatts)
+Dataset: uma função linear com um ruído gaussiano de media 0 e
+variancia não-unitária.
 
 Beta = (X'X)-¹X'*y
 ŷ(X) = X * beta
@@ -40,10 +38,6 @@ Author: Manoel Vilela
 
 Aumento do grau de Polinômios
 
-
-Métricas em sala de aula
-------------------------
-
 k(1) = 0.93
 k(2) = 0.94
 k(3) = 0.97
@@ -51,13 +45,18 @@ k(3) = 0.969
 k(4) = 0.9737242
 k(5) = 0.9737256
 
+
+Dataset de aula
+----------------
+
+x = velocidade do vento em aquiraz
+y = potencia de energia gerada
 """
 
 import numpy as np
 from numpy.linalg import inv
 from matplotlib import pyplot as plt
 from math import sqrt
-
 
 
 def dataset():
@@ -79,8 +78,8 @@ def regression(x, y, k=1):
     return beta, y_pred
 
 
-def generate_regression(x, y, k):
-    """Gera os coeficientes de uma regressão de grau k, dado x e y."""
+def regression_report(x, y, k):
+    """Gera um relatório de uma regressão de grau k, dado x e y."""
     y_mean = np.mean(y)
     n = len(x)
     beta, y_pred = regression(x, y, k)
@@ -93,73 +92,34 @@ def generate_regression(x, y, k):
     r2aj = 1 - r * aj
 
     rmse = sqrt(sum((y - y_pred) ** 2)/n)
-    return [x, y_pred, r2, r2aj, rmse, beta]
-
-
-def regression_report(x, y_pred, r2, r2aj, rmse, beta, k):
-    """Gera um relatório e gráfico de um modelo de regressão"""
     print()
-    print("REGRESSÃO k={}".format(k))
-    print("---------------")
+    print("RESULTS REGRESSION k={}".format(k))
+    print("-----------------------")
     print("RMSE:\t", round(rmse, ndigits=5))
     print("  R2:\t", round(r2, ndigits=5))
     print("R2aj:\t", round(r2aj, ndigits=5))
     print("   B:\t", np.round(beta, decimals=3))
     label = 'k={} /  r2aj = {}'.format(k, round(r2aj, ndigits=5))
     plt.plot(x, y_pred, label=label)
+    return beta
 
 
 def main():
     """Função principal."""
     print(__doc__)
+    plt.close("all")
     x, y = dataset()
-
-    # Graus de polinômios para gerar regressões
-    ks = [2, 3, 4, 5]
-    regressions = []
-    for k in ks:
-        regressions.append(generate_regression(x, y, k))
-
-    # Cálculo de métricas macro
-    np.set_printoptions(formatter={'float': '{: 0.5f}'.format})
-    t = np.array(range(ks[0], len(regressions) + ks[0]))
-    m = np.array(regressions)
-    r2 =  m[:, 2].astype(float)
-    r2aj = m[:, 3].astype(float)
-    rmse = m[:, 4].astype(float)
-    print()
-    print("== SUMÁRIO".format(k))
-    print("-----------")
-    print("   vec(k): ", ks)
-    print("  vec(r2): ", r2)
-    print("vec(r2aj): ", r2aj)
-    print("vec(rmse): ", rmse)
-    print("r2 - r2aj: ", r2 - r2aj)
-    print()
-
-    # Plotting
-    # fig 1: models
-    plt.figure(0)
-    for k, regression in zip(ks, regressions):
-        regression_report(*regression, k)
+    regression_report(x, y, 2)
+    regression_report(x, y, 3)
+    regression_report(x, y, 4)
+    regression_report(x, y, 5)
     plt.scatter(x, y, color='black', s=2)
     ax = plt.gca()
     ax.set_title("Regressão")
-    ax.set_xlabel("x: velocidade do vento (m/s)")
-    ax.set_ylabel("y: potência gerada (KWatt)")
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
     ax.legend()
-    plt.savefig("q3-regression.png", figsize=(10, 8))
+    plt.show(block=False)
+    plt.savefig("q3-regression-4-5.png", figsize=(10, 8))
 
-    # fig 2: regressions
-    plt.figure(2)
-    plt.scatter(t, r2, color='red', label='R²')
-    plt.scatter(t, r2aj, color='blue', label='R²aj')
-    ax = plt.gca()
-    ax.set_title("Métricas dos modelos")
-    ax.set_xlabel("k (grau do polinômio)")
-    ax.set_ylabel("value")
-    ax.legend()
-    plt.show()
-
-if __name__ == '__main__':
-    main()
+main()
