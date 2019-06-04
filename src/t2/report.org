@@ -1,0 +1,26 @@
+* Introdução
+
+Os algoritmos para esse trabalho foram desenvolvidos na linguagem
+Python3, testado na versão 3.6 e 3.7. As bibliotecas utilizadas estão
+listadas no arquivo requirements.txt onde podem ser instaladas pelo
+gerenciador de pacotes ~pip~:
+
+#+BEGIN_EXAMPLE
+pip install -r requirements.txt
+#+END_EXAMPLE
+
+Embora há mais de dois arquivos Python, as questões estão resolvidas
+como ponto de entrada nos arquivos ~q1.py~ e ~q2.py~. O restante dos
+arquivos são modulos para re-utilização de código entre os diferentes
+problemas enfrentados no desenvolvimento do trabalho.
+
+* Q1
+
+Ao avaliar a variância do dataset aerogerador, é perceptível que a
+variável y possui uma alta variância \( \sigma^{2} =11125.10 \). Por
+este motivo, para o desenvolvimento de um modelo de regressão
+utilizando a rede neural Extreme Learning Machine foi necessário
+normalizar a potência gerada com o algoritmo /MinMax Scaling/.
+
+
+* Q2
