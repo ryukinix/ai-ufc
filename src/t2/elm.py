@@ -35,6 +35,7 @@ from processing import sigmoid, add_bias, encode_label
 
 seed = 42
 
+
 def train(X, y, q=10, activation=None):
     """Algoritmo de treinamento para ELM (Extreme Learning Machine)
 
@@ -49,6 +50,7 @@ def train(X, y, q=10, activation=None):
     W: pesos aleatórios da camada oculta
 
     """
+    np.random.seed(seed)
     # rótulos
     # torna vetor linha em coluna
     n, p = X.shape
