@@ -1,16 +1,14 @@
-#+STARTUP: showall align
-#+OPTIONS: todo:nil tasks:("IN-PROGRESS" "DONE") tags:nil
+#+STARTUP: showall align latexpreview
+#+OPTIONS: todo:nil tasks:("IN-PROGRESS" "DONE") tags:nil num:nil toc:nil
 #+AUTHOR: Manoel Vilela / 394192
 #+TITLE: Inteligência Computacional @@latex:\\@@ TR2 - Redes Neurais
-#+EXCLUDE_TAGS: TOC_3
 #+LANGUAGE: bt-br
-#+LATEX_CLASS: report
+#+LATEX_CLASS: article
 #+LATEX_HEADER: \usepackage[]{babel}
 #+LATEX_HEADER: \usepackage{indentfirst}
-#+LATEX_HEADER: \renewcommand\listingscaption{Código}
-#+OPTIONS: toc:nil
-[[./pics/ufc.png]]
 
+
+[[file:pics/ufc.png]]
 
 #+BEGIN_abstract
 
@@ -20,12 +18,14 @@ bastante famosos como Perceptron e Multi-Layer Perceptron
 (MLP). Adicionalmente é também explorado uma rede exótica com nome de
 /Extreme Learning Machine/ (ELM) , ou /Random Vector Functional Link/
 (RVFL) que possui como elemento do seu treinamento o famoso /Ordinary
-Leasting Squares/ (OLS).
+Leasting Squares/ (OLS). Um problema de regressão e outro de
+classificação são abordados.
 
 #+END_abstract
-#+TOC: headlines=2
+
 
 * Introdução
+
 
 Os algoritmos para esse trabalho foram desenvolvidos na linguagem
 Python3 e testado especificamente na versão 3.6 e 3.7. O Sistema
@@ -90,9 +90,9 @@ necessário então realizar uma regressão polinomial aumentando a
 quantidade de /features/ recebidas da rede como potenciações do vetor
 \( x \) sendo ~k~ o grau do polinômio de regressão.
 
-#+BEGIN_LaTeX latex
-\centering
-\begin{equation*}
+#+BEGIN_latex latex
+\begin{center}
+\begin{align}
 
 \bold{X} = \left[
 \bold{-1} \quad |
@@ -102,19 +102,21 @@ quantidade de /features/ recebidas da rede como potenciações do vetor
 \quad \bold{x}^k
 \right]
 
-\end{equation*}
-
-
-#+END_LaTeX
+\end{align}
+\end{center}
+#+END_latex
 
 
 Ao realizar alguns experimentos com essa estrutura para k > 1, tem-se
-os resultados a seguir:
+que que o modelo se ajusta melhor aos pontos do dataset, dessa maneira
+aproximando o coeficiente \( R^2 \) de 1.
 
 #+CAPTION: Regressão polinomial com variados neurônios ocultos.
 [[file:pics/q1-elm-polinomial.png]]
 
 
-
+É possível dizer portanto que: entre os experimentos apresentados o
+melhor modelo foi aquele com \(q=2\) neurônios ocultos e \(k=5\) grau
+do polinômio estimador.
 
 * Questão 2
