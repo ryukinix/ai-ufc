@@ -4,6 +4,7 @@
 #+TITLE: Inteligência Computacional @@latex:\\@@ TR2 - Redes Neurais
 #+EXCLUDE_TAGS: TOC_3
 #+LANGUAGE: bt-br
+#+LATEX_CLASS: report
 #+LATEX_HEADER: \usepackage[]{babel}
 #+LATEX_HEADER: \usepackage{indentfirst}
 #+LATEX_HEADER: \renewcommand\listingscaption{Código}
@@ -28,10 +29,10 @@ Leasting Squares/ (OLS).
 
 Os algoritmos para esse trabalho foram desenvolvidos na linguagem
 Python3 e testado especificamente na versão 3.6 e 3.7. O Sistema
-Operacional utilizado foi GNU/Linux, distribuições Mint, Ubuntu e
-Artix. O editor principal Emacs 25.2.2. As bibliotecas utilizadas
-estão listadas no arquivo requirements.txt onde podem ser instaladas
-pelo gerenciador de pacotes ~pip~ via:
+Operacional utilizado foi GNU/Linux e o editor principal Emacs
+25.2.2. As bibliotecas utilizadas estão listadas no arquivo
+requirements.txt onde podem ser instaladas pelo gerenciador de pacotes
+~pip~ via:
 
 #+BEGIN_EXAMPLE
 pip install -r requirements.txt
@@ -47,15 +48,14 @@ python q2.py
 #+END_EXAMPLE
 
 O restante dos arquivos são modulos para re-utilização de código entre
-os diferentes problemas enfrentados no desenvolvimento do trabalho.
-
-As redes neurais que foram estudadas, codificadas ou experimentadas são:
+os diferentes problemas enfrentados no desenvolvimento do trabalho. As
+redes neurais que foram estudadas, codificadas ou experimentadas são:
 
 + Extreme Learning Machine (ELM)
 + Perceptron
 + Multi-Layer Perceptron (MLP)
 
-Como critérios de avaliação do modelo foram usados:
+Como critérios de avaliação dos modelos foram usados:
 
 + K-Fold
 + Hold Out
@@ -63,7 +63,7 @@ Como critérios de avaliação do modelo foram usados:
 + \( R^{2} \) (Métrica de regressão)
 + Acurácia (Métrica de classificação)
 
-* Q1
+* Questão 1
 
 Este é um problema de regressão, portanto, não irei utilizar a função
 de ativação /sigmoid/ na camada de saída. Ao avaliar algumas características do
@@ -77,28 +77,44 @@ m/s) \), a rede neural possuiu melhores resultados para poucos
 neurônios ocultos, parametrizados pela leta \(q\). A seguir é possível
 ver uma síntese das respostas:
 
-#+CAPTION: O melhor resultado desse modelo foi para q=1.
-[[file:pics/q1-elm.png]]
+#+CAPTION: Regressão linear com variados neurônios ocultos.
+[[file:pics/q1-elm-linear.png]]
 
 Esta resposta demonstrou-se um tanto curiosa, pois eu (relator)
 esperava que com o acréscimo de neurônios ocultos fosse possível a
 rede possuir um comportamento não-linear na saída, mas isso não é o
 que este resultado demonstra.
 
-Dado esse fato, para efeitos mais interessantes nesse problema, eu é
+Dado esse fato, conclui que para alcançar este efeito na cruva seria
 necessário então realizar uma regressão polinomial aumentando a
 quantidade de /features/ recebidas da rede como potenciações do vetor
-\( x \).
+\( x \) sendo ~k~ o grau do polinômio de regressão.
 
 #+BEGIN_LaTeX latex
-\begin{equation}
+\centering
+\begin{equation*}
 
-\vec{X} = [\bold{-1}, \bold{x}^1, \bold{x}^2, ..., \bold{x}^k]
+\bold{X} = \left[
+\bold{-1} \quad |
+\quad \bold{x}^1 \quad |
+\quad \bold{x}^2 \quad |
+\quad ... \quad |
+\quad \bold{x}^k
+\right]
 
-\end{equation}
+\end{equation*}
 
-Sendo ~k~ o grau do polinômio de regressão.
 
 #+END_LaTeX
 
-* Q2
+
+Ao realizar alguns experimentos com essa estrutura para k > 1, tem-se
+os resultados a seguir:
+
+#+CAPTION: Regressão polinomial com variados neurônios ocultos.
+[[file:pics/q1-elm-polinomial.png]]
+
+
+
+
+* Questão 2
