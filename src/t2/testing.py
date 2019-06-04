@@ -31,13 +31,13 @@ import numpy as np
 from processing import concat
 
 def accuracy(y_test, y_pred):
-    """Calcula métrica acurácia para classificação"""
+    """Calcula métrica de acurácia para classificação."""
     n = len(y_test)
     corrects = sum([bool(y1 == y2) for y1, y2 in zip(y_test, y_pred)])
     return corrects/n
 
 def r2(y_test, y_pred):
-    """Cálcula coeficiente de ajuste r² para regressão"""
+    """Computa o coeficiente de ajuste de curva r² para regressão."""
     y_mean = np.mean(y_test)
     n = len(y_test)
     SQE = sum((y_test - y_pred) ** 2)
@@ -48,6 +48,11 @@ def r2(y_test, y_pred):
     return r2
 
 def hold_out(X, y, test_size=0.30):
+    """Esquema de particionamento de dados train/test split.
+
+    Particiona X,y de forma ordenada após embaralhamento baseado no ponto
+    de corte `test_size`.
+    """
     shape = y.shape
     n = len(y)
     c = shape[1] if len(shape) > 1 else 1
