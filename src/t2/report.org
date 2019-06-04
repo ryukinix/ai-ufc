@@ -29,7 +29,7 @@ classificação são abordados.
 
 Os algoritmos para esse trabalho foram desenvolvidos na linguagem
 Python3 e testado especificamente na versão 3.6 e 3.7. O Sistema
-Operacional utilizado foi GNU/Linux e o editor principal Emacs
+Operacional utilizado foi GNU/Linux e o editor de texto Emacs versão
 25.2.2. As bibliotecas utilizadas estão listadas no arquivo
 requirements.txt onde podem ser instaladas pelo gerenciador de pacotes
 ~pip~ via:
@@ -38,9 +38,8 @@ requirements.txt onde podem ser instaladas pelo gerenciador de pacotes
 pip install -r requirements.txt
 #+END_EXAMPLE
 
-Embora há mais de dois arquivos Python, as questões estão resolvidas
-como ponto de entrada nos arquivos ~q1.py~ e ~q2.py~ e podem ser
-executadas como:
+As questões estão resolvidas como ponto de entrada nos arquivos
+~q1.py~ e ~q2.py~ e podem ser executadas como:
 
 #+BEGIN_EXAMPLE
 python q1.py
@@ -48,8 +47,9 @@ python q2.py
 #+END_EXAMPLE
 
 O restante dos arquivos são modulos para re-utilização de código entre
-os diferentes problemas enfrentados no desenvolvimento do trabalho. As
-redes neurais que foram estudadas, codificadas ou experimentadas são:
+os diferentes problemas enfrentados no desenvolvimento do trabalho
+(/divider to conquer/). As redes neurais que foram estudadas,
+codificadas ou experimentadas são:
 
 + Extreme Learning Machine (ELM)
 + Perceptron
