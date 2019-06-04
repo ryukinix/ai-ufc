@@ -29,11 +29,9 @@ q = 20 -> 0.97 acc (sorte do cassete)
 
 import numpy as np
 from matplotlib import pyplot as plt
-from load import iris
-from testing import hold_out, accuracy
-from processing import sigmoid, add_bias, encode_label
-
-seed = 42
+import load
+import processing
+import testing
 
 
 def train(X, y, q=10, activation=None):
@@ -50,7 +48,6 @@ def train(X, y, q=10, activation=None):
     W: pesos aleatórios da camada oculta
 
     """
-    np.random.seed(seed)
     # rótulos
     # torna vetor linha em coluna
     n, p = X.shape
@@ -60,12 +57,12 @@ def train(X, y, q=10, activation=None):
     # Pesos aleatórios da camada oculta
     W = np.random.randn(q, p+1)
     # Adicionar bias
-    X = add_bias(X)
+    X = processing.add_bias(X)
     # Calcular saída da camada oculta
     Z = W @ X.T
     if activation is not None:
         Z = activation(Z)
-    Z = add_bias(Z, axis=0)
+    Z = processing.add_bias(Z, axis=0)
     # Calcular pesos M para camada de saída (aprendizado)
     # Utiliza-se mínimos quadrados
     M = D @ (Z.T @ (np.linalg.inv(Z @ Z.T)))
@@ -86,30 +83,32 @@ def predict(X, W, M, activation=None):
     np.array
 
     """
-    X = add_bias(X)
+    X = processing.add_bias(X)
     Z = W @ X.T
     if activation is not None:
         Z = activation(Z)
-    Z = add_bias(Z, axis=0)
+    Z = processing.add_bias(Z, axis=0)
     D = M @ Z
 
     return D.T
 
 
 def main():
-    print()
-    X, y = iris()
-    q = 30
-    X_train, X_test, y_train, y_test = hold_out(X, y)
+    print("-- Extreme Learning Machine")
+    np.random.seed(43)
+    X, y = load.iris()
+    q = 20
+    X_train, X_test, y_train, y_test = testing.hold_out(X, y)
     print("X_train shape: ", X_train.shape)
     print("X_test shape: ", X_test.shape)
-    W, M = train(X_train, y_train, q=q, activation=sigmoid)
-    D_teste = predict(X_test, W, M, activation=sigmoid)
+    print("Q: ", q)
+    W, M = train(X_train, y_train, q=q, activation=processing.sigmoid)
+    D_teste = predict(X_test, W, M, activation=processing.sigmoid)
 
-    y_test = encode_label(y_test)
-    y_pred = encode_label(D_teste)
-
-    print("ACC: ", round(accuracy(y_test, y_pred), ndigits=2))
+    y_test = processing.encode_label(y_test)
+    y_pred = processing.encode_label(D_teste)
+    acc = round(testing.accuracy(y_test, y_pred), ndigits=2)
+    print("ACC: ", acc )
 
 
 if __name__ == '__main__':
