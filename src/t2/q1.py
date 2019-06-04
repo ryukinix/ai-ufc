@@ -21,17 +21,40 @@ import load
 import processing
 import testing
 import elm
+from processing import column_vector as colv
+import numpy as np
+from matplotlib import pyplot as plt
+
+def train(X, y, q=2):
+    W, M = elm.train(X, y, q=q)
+    y_pred = elm.predict(X, W, M)
+    r2 = testing.r2(y.flatten(), y_pred.flatten())
+
+    return r2, y_pred
+
 
 def main():
+    print(__doc__)
     X, y = load.aerogerador()
-    q = 3
-    X_train, X_test, y_train, y_test = testing.hold_out(X, y, test_size=0.50)
-    W, M = elm.train(X_train, y_train, q=q)
-    y_pred = elm.predict(X_test, W, M)
+    X, y = colv(X), colv(y)
+    # Plotting
+    # fig 1: models
+    plt.figure("Inteligência Computacional 2019.1 UFC")
+    for q in range(1, 10, 2):
+        r2, y_pred = train(X, y, q=q)
+        label = 'q={} r²={}'.format(q, round(r2, ndigits=3))
+        plt.plot(X, y_pred.flatten(), label=label)
 
-    r2 = testing.r2(y_test.flatten(), y_pred.flatten())
-    print("Q: ", q)
-    print("R2: ", r2)
+    plt.scatter(X, y, color='black', s=3)
+    ax = plt.gca()
+    ax.set_title("Regressão via Extreme Learning Machine")
+    ax.set_xlabel("x: velocidade do vento (m/s)")
+    ax.set_ylabel("y: potência gerada (KWatt)")
+    ax.legend()
+    plt.savefig("pics/q1-elm.png", figsize=(10, 8))
+    plt.show()
+
+
 
 
 if __name__ == '__main__':
