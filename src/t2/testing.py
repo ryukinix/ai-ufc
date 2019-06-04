@@ -8,6 +8,25 @@
 #      @email: manoel_vilela@engineer.com
 #
 
+
+"""
+Módulo com algoritmos de teste e métricas de avaliação.
+
+Para classificação:
++ accuracy
+
+Para regressão:
++ r2
+
+Algoritmos de separação de treinamento/teste:
++ hold_out
++ kfold
++ leave_one_out
+
+Ambos algoritmos de recorte devolvem partições de N coleções de X e y
+na forma (X, y).
+"""
+
 import numpy as np
 
 def accuracy(y_test, y_pred):
@@ -26,17 +45,6 @@ def r2(y_test, y_pred):
     r2 = 1 - r
 
     return r2
-
-def concat(X, y):
-    n = len(X)
-    if len(X.shape) == 1:
-        X = X.reshape(n, 1)
-
-    if len(y.shape) == 1:
-        y = y.reshape(n, 1)
-
-    return np.concatenate([X, y], axis=1)
-
 
 def hold_out(X, y, test_size=0.30):
     shape = y.shape

@@ -17,6 +17,8 @@
 
 """
 
+import numpy as np
+
 def sigmoid(x):
     """Função de ativação sigmoid"""
     return 1 / (1 + np.exp(-x))
@@ -49,3 +51,22 @@ def encode_label(X):
         x = list(x)
         labels[i] = x.index(max(x))
     return labels
+
+
+def column_vector(X):
+    n = len(X)
+    if len(X.shape) == 1:
+        return X.reshape(n, 1)
+    return X
+
+
+def concat(X, y):
+    """Concat concatena X e y independente de serem vetor linha ou coluna"""
+    n = len(X)
+    if len(X.shape) == 1:
+        X = X.reshape(n, 1)
+
+    if len(y.shape) == 1:
+        y = y.reshape(n, 1)
+
+    return np.concatenate([X, y], axis=1)
