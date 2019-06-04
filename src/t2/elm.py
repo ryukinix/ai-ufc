@@ -41,12 +41,12 @@ def activation(x):
 
 def add_bias(X, axis=1):
     """Adiciona o vetor de bias em X como uma sequência de -1"""
-    # Fix vector classification bias addition
+    # If X is a simple vector, add the 1 sequence in axis=0 (horizontal)
     if axis==1 and (len(X.shape) == 1):
         axis = 0
     return np.insert(X, 0, values=-1, axis=axis)
 
-def train(X, y, q=30):
+def train(X, y, q=50):
     """Algoritmo de treinamento para ELM (Extreme Learning Machine)
 
     Parâmetros
@@ -103,7 +103,7 @@ def predict(X, W, M):
 def encode_label(X):
     """Transforma representação classes com one-hot-encoding em labels.
 
-    Exemplos de IO
+    Exemplos de entrada e saída
     --------------
     [0, 0, 1] -> 2
     [1, 0, 0] -> 0
@@ -122,16 +122,38 @@ def accuracy(y_test, y_pred):
     corrects = sum([bool(y1 == y2) for y1, y2 in zip(y_test, y_pred)])
     return corrects/n
 
+def hold_out(X, y, test_size=0.25):
+    n, c = y.shape
+
+    dataset = np.concatenate([X, y], axis=1)
+    # dataset embaralhado (shuffled)
+    np.random.shuffle(dataset)
+    X_s, y_s = dataset[:, :-c], dataset[:, -c:]
+
+    test_index = round(test_size * n)
+    X_train = X_s[test_index:]
+    y_train = y_s[test_index:]
+    X_test = X_s[:test_index]
+    y_test = y_s[:test_index]
+
+    return X_train, X_test, y_train, y_test
+
 
 def main():
+    print()
     X, y = iris()
-    W, M = train(X, y)
-    D_teste = predict(X, W, M)
+    X_train, X_test, y_train, y_test = hold_out(X, y)
+    print("X_train shape: ", X_train.shape)
+    print("X_test shape: ", X_test.shape)
+    W, M = train(X_train, y_train)
+    D_teste = predict(X_test, W, M)
 
-    y_test = encode_label(y)
+    y_test = encode_label(y_test)
     y_pred = encode_label(D_teste)
+
     print("ACC: ", round(accuracy(y_test, y_pred), ndigits=2))
 
+main()
 
 if __name__ == '__main__':
     main()
