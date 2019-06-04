@@ -30,7 +30,7 @@ q = 20 -> 0.97 acc (sorte do cassete)
 import numpy as np
 from matplotlib import pyplot as plt
 from load import iris
-
+from testing import hold_out, accuracy
 
 seed = 42
 
@@ -115,37 +115,13 @@ def encode_label(X):
         labels[i] = x.index(max(x))
     return labels
 
-
-def accuracy(y_test, y_pred):
-    """Calcula métrica acurácia para classificação"""
-    n = len(y_test)
-    corrects = sum([bool(y1 == y2) for y1, y2 in zip(y_test, y_pred)])
-    return corrects/n
-
-def hold_out(X, y, test_size=0.25):
-    n, c = y.shape
-
-    dataset = np.concatenate([X, y], axis=1)
-    # dataset embaralhado (shuffled)
-    np.random.shuffle(dataset)
-    X_s, y_s = dataset[:, :-c], dataset[:, -c:]
-
-    test_index = round(test_size * n)
-    X_train = X_s[test_index:]
-    y_train = y_s[test_index:]
-    X_test = X_s[:test_index]
-    y_test = y_s[:test_index]
-
-    return X_train, X_test, y_train, y_test
-
-
 def main():
     print()
     X, y = iris()
     X_train, X_test, y_train, y_test = hold_out(X, y)
     print("X_train shape: ", X_train.shape)
     print("X_test shape: ", X_test.shape)
-    W, M = train(X_train, y_train)
+    W, M = train(X_train, y_train, q = 6)
     D_teste = predict(X_test, W, M)
 
     y_test = encode_label(y_test)
