@@ -1,26 +1,104 @@
+#+STARTUP: showall align
+#+OPTIONS: todo:nil tasks:("IN-PROGRESS" "DONE") tags:nil
+#+AUTHOR: Manoel Vilela / 394192
+#+TITLE: Inteligência Computacional @@latex:\\@@ TR2 - Redes Neurais
+#+EXCLUDE_TAGS: TOC_3
+#+LANGUAGE: bt-br
+#+LATEX_HEADER: \usepackage[]{babel}
+#+LATEX_HEADER: \usepackage{indentfirst}
+#+LATEX_HEADER: \renewcommand\listingscaption{Código}
+#+OPTIONS: toc:nil
+[[./pics/ufc.png]]
+
+
+#+BEGIN_abstract
+
+Este trabalho tem como foco de estudo algumas Redes Neurais
+Artificiais. Durante o desenvolvimento foram testado certos algoritmos
+bastante famosos como Perceptron e Multi-Layer Perceptron
+(MLP). Adicionalmente é também explorado uma rede exótica com nome de
+/Extreme Learning Machine/ (ELM) , ou /Random Vector Functional Link/
+(RVFL) que possui como elemento do seu treinamento o famoso /Ordinary
+Leasting Squares/ (OLS).
+
+#+END_abstract
+#+TOC: headlines=2
+
 * Introdução
 
 Os algoritmos para esse trabalho foram desenvolvidos na linguagem
-Python3, testado na versão 3.6 e 3.7. As bibliotecas utilizadas estão
-listadas no arquivo requirements.txt onde podem ser instaladas pelo
-gerenciador de pacotes ~pip~:
+Python3 e testado especificamente na versão 3.6 e 3.7. O Sistema
+Operacional utilizado foi GNU/Linux, distribuições Mint, Ubuntu e
+Artix. O editor principal Emacs 25.2.2. As bibliotecas utilizadas
+estão listadas no arquivo requirements.txt onde podem ser instaladas
+pelo gerenciador de pacotes ~pip~ via:
 
 #+BEGIN_EXAMPLE
 pip install -r requirements.txt
 #+END_EXAMPLE
 
 Embora há mais de dois arquivos Python, as questões estão resolvidas
-como ponto de entrada nos arquivos ~q1.py~ e ~q2.py~. O restante dos
-arquivos são modulos para re-utilização de código entre os diferentes
-problemas enfrentados no desenvolvimento do trabalho.
+como ponto de entrada nos arquivos ~q1.py~ e ~q2.py~ e podem ser
+executadas como:
+
+#+BEGIN_EXAMPLE
+python q1.py
+python q2.py
+#+END_EXAMPLE
+
+O restante dos arquivos são modulos para re-utilização de código entre
+os diferentes problemas enfrentados no desenvolvimento do trabalho.
+
+As redes neurais que foram estudadas, codificadas ou experimentadas são:
+
++ Extreme Learning Machine (ELM)
++ Perceptron
++ Multi-Layer Perceptron (MLP)
+
+Como critérios de avaliação do modelo foram usados:
+
++ K-Fold
++ Hold Out
++ Leave One Out
++ \( R^{2} \) (Métrica de regressão)
++ Acurácia (Métrica de classificação)
 
 * Q1
 
-Ao avaliar a variância do dataset aerogerador, é perceptível que a
-variável y possui uma alta variância \( \sigma^{2} =11125.10 \). Por
-este motivo, para o desenvolvimento de um modelo de regressão
-utilizando a rede neural Extreme Learning Machine foi necessário
-normalizar a potência gerada com o algoritmo /MinMax Scaling/.
+Este é um problema de regressão, portanto, não irei utilizar a função
+de ativação /sigmoid/ na camada de saída. Ao avaliar algumas características do
+/dataset/ aerogerador, é perceptível que a variável \(y\) possui uma
+alta variância \( \sigma^{2}_{y} =11125.10 \) e um comportamento
+não-linear nas extremidades.
 
+Para o caso mais simples onde as características da rede é apenas um
+vetor simples \(\vec{x})\) que representa a velocidade do vento em \(
+m/s) \), a rede neural possuiu melhores resultados para poucos
+neurônios ocultos, parametrizados pela leta \(q\). A seguir é possível
+ver uma síntese das respostas:
+
+#+CAPTION: O melhor resultado desse modelo foi para q=1.
+[[file:pics/q1-elm.png]]
+
+Esta resposta demonstrou-se um tanto curiosa, pois eu (relator)
+esperava que com o acréscimo de neurônios ocultos fosse possível a
+rede possuir um comportamento não-linear na saída, mas isso não é o
+que este resultado demonstra.
+
+Dado esse fato, para efeitos mais interessantes nesse problema, eu é
+necessário então realizar uma regressão polinomial aumentando a
+quantidade de /features/ recebidas da rede como potenciações do vetor
+\( x \).
+
+#+BEGIN_LaTeX latex
+\begin{equation}
+
+\vec{X} = [\bold{-1}, \bold{x}^1, \bold{x}^2, ..., \bold{x}^k]
+
+\end{equation}
+
+Sendo ~k~ o grau do polinômio de regressão.
+
+#+END_LaTeX
 
 * Q2
