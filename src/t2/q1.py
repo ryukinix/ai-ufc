@@ -3,7 +3,7 @@
 #
 #    Copyright © 2019 Manoel Vilela
 #
-#    @project: ELM @ Aerogerador - Regressão
+#    @project: Inteligência Computacional UFC 2019.1 - Redes Neurais
 #     @author: Manoel Vilela
 #      @email: manoel_vilela@engineer.com
 #
