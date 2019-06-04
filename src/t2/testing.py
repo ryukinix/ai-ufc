@@ -28,6 +28,7 @@ na forma (X, y).
 """
 
 import numpy as np
+from processing import concat
 
 def accuracy(y_test, y_pred):
     """Calcula métrica acurácia para classificação"""
