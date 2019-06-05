@@ -19,6 +19,8 @@
 
 import numpy as np
 
+SEED = 32
+
 def sigmoid(x):
     """Função de ativação sigmoid"""
     return 1 / (1 + np.exp(-x))

@@ -95,7 +95,7 @@ def predict(X, W, M, activation=None):
 
 def main():
     print("-- Extreme Learning Machine")
-    np.random.seed(43)
+    np.random.seed(processing.SEED)
     X, y = load.iris()
     q = 20
     X_train, X_test, y_train, y_test = testing.hold_out(X, y)
