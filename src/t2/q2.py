@@ -128,6 +128,8 @@ def train_test_perceptron(X, y):
     acc_leave = np.mean(np.array(accs_leave))
     accs.append(acc_leave)
 
+    return accs
+
 
 def train_test_elm(X, y, q=40):
     """Treina, testa e calcúla acurácia do ELM para q.
@@ -192,8 +194,7 @@ def run_perceptron(X, y):
     print(":: Evaluating Perceptron")
     print(":: hold-out | 10-fold | leave-one-out")
     acc_perceptron = train_test_perceptron(X, y)
-    acc_perceptron = np.array(accs_perceptron)
-    print(np.around(accs_perceptron, decimals=2))
+    print(np.around(acc_perceptron, decimals=2))
 
 
 
@@ -205,8 +206,8 @@ def main():
     print(":: Q RANGE: ", q_range)
     print()
     run_perceptron(X, y)
-    # run_mlp(X, y, q_range)
-    # run_elm(X, y, q_range)
+    run_mlp(X, y, q_range)
+    run_elm(X, y, q_range)
 
 
 
