@@ -13,7 +13,7 @@ import processing
 import testing
 import numpy as np
 
-def train(X, y, learning_rate=0.01, max_iterations=1000):
+def train(X, y, learning_rate=0.01, max_iterations=100):
     """Função de treinamento da Rede Neural Perceptron.
 
     Função de ativação no neurônio é a sigmoid.
@@ -25,12 +25,16 @@ def train(X, y, learning_rate=0.01, max_iterations=1000):
 
     epochs = 0
     while epochs <= max_iterations:
+        deltaW_sum = 0
         for xi, d in zip(X, y):
             x = processing.column_vector(xi)
             yi = processing.sigmoid(W.T @ xi) # activation
             e = d - yi
             deltaW = learning_rate * e * x
             W = W + deltaW
+            deltaW_sum += abs(deltaW).sum()
+        if deltaW_sum == 0: # convergence condition
+            break
         epochs += 1
     return W
 
