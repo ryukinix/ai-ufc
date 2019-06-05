@@ -55,7 +55,7 @@ codificadas ou experimentadas são:
 + Perceptron
 + Multi-Layer Perceptron (MLP)
 
-Como critérios de avaliação dos modelos foram usados:
+Como critérios de validação dos modelos foram usados:
 
 + K-Fold
 + Hold Out
@@ -120,3 +120,50 @@ melhor modelo foi aquele com \(q=2\) neurônios ocultos e \(k=5\) grau
 do polinômio estimador.
 
 * Questão 2
+
+Este é um problema de classificação com 3 classes e 4 /features/. O
+dataset é o IRIS, clássico e canônico problema para classificação.
+
+Considerando os algoritmos Perceptron, MLP e ELM, nas tabelas a seguir
+é apresentado a performance dos modelos variando Q num passo de 5 no
+intervalo de \([3, 40]\). É apresentado cada coluna como a acurácia
+pelo método de validação descrito.
+
+
+#+CAPTION: ELM
+|----+----------+---------+---------------|
+|  Q | HOLD-OUT | 10-FOLD | LEAVE-ONE-OUT |
+|----+----------+---------+---------------|
+|  3 |     0.82 |    0.81 |          0.79 |
+|  8 |     0.91 |    0.97 |          0.93 |
+| 13 |     0.96 |    0.95 |          0.93 |
+| 18 |     0.91 |    0.96 |          0.94 |
+| 23 |     0.98 |    0.99 |          0.95 |
+| 28 |     0.98 |    0.92 |          0.95 |
+| 33 |     0.89 |    0.95 |          0.95 |
+| 38 |     0.89 |    0.93 |          0.94 |
+|----+----------+---------+---------------|
+
+
+#+CAPION: MLP
+|----+----------+---------+---------------|
+|  Q | HOLD-OUT | 10-FOLD | LEAVE-ONE-OUT |
+|----+----------+---------+---------------|
+|  3 |     0.89 |    0.81 |          0.82 |
+|  8 |     0.93 |    0.64 |          0.58 |
+| 13 |     0.98 |    0.97 |          0.97 |
+| 18 |     0.98 |    0.97 |          0.96 |
+| 23 |     0.93 |    0.97 |          0.97 |
+| 28 |     0.96 |    0.66 |          0.39 |
+| 33 |     0.96 |    0.97 |          0.97 |
+| 38 |     0.96 |    0.97 |          0.97 |
+|----+----------+---------+---------------|
+
+
+* Apêndice
+
+
+Na minha máquina rodar tais modelos de aprendizagem máquina e todas
+estratégias de validação levou cerca de 10min. Máquina:
+
++ Intel Core 2 Duo E8500 @ 3.16 GHz, 4 GB de RAM
