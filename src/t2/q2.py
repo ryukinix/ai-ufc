@@ -39,7 +39,6 @@ def mlp(q):
                          random_state=processing.SEED)
 
 def evaluate_mlp(X_train, X_test, y_train, y_test, q):
-    # HOLD-OUT
     clf = mlp(q)
     clf.fit(X_train, processing.encode_label(y_train))
     y_pred = clf.predict(X_test)
