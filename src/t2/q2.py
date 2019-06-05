@@ -92,8 +92,42 @@ def evaluate_elm(X_train, X_test, y_train, y_test, q):
 
     return acc
 
+def evaluate_perceptron(X_train, X_test, y_train, y_test):
+    W = perceptron.train(X_train, y_train)
+    y_pred = perceptron.predict(X_test, W)
+    y_test = processing.encode_label(y_test)
+    acc = testing.accuracy(y_test, y_pred)
+
+    return acc
+
 def train_test_perceptron(X, y):
-    pass
+    accs = []
+
+    # HOLD-OUT
+    X_train, X_test, y_train, y_test = testing.hold_out(X, y, test_size=0.3)
+    acc = evaluate_perceptron(X_train, X_test, y_train, y_test)
+    accs.append(acc)
+
+
+    # ==> K-FOLD, k=10
+    accs_kfold = []
+    folds = testing.kfold(X, y, k=10)
+    for X_train, X_test, y_train, y_test in folds:
+        acc = evaluate_perceptron(X_train, X_test, y_train, y_test)
+        accs_kfold.append(acc)
+    acc_kfold = np.mean(np.array(accs_kfold))
+    accs.append(acc_kfold)
+
+
+    # ==> LEAVE ONE OUT
+    accs_leave = []
+    folds = testing.leave_one_out(X, y)
+    for X_train, X_test, y_train, y_test in folds:
+        acc = evaluate_perceptron(X_train, X_test, y_train, y_test)
+        accs_leave.append(acc)
+    acc_leave = np.mean(np.array(accs_leave))
+    accs.append(acc_leave)
+
 
 def train_test_elm(X, y, q=40):
     """Treina, testa e calcúla acurácia do ELM para q.
@@ -132,13 +166,7 @@ def train_test_elm(X, y, q=40):
     return accs
 
 
-def main():
-    print(__doc__)
-    np.random.seed(processing.SEED)
-    X, y = load.iris()
-    q_range = (3, 41, 5)
-    print(":: Q RANGE: ", q_range)
-
+def run_elm(X, y, q_range):
     print(":: Evaluating ELM ")
     print(":: Q | hold-out | 10-fold | leave-one-out")
     accs_elm = []
@@ -147,7 +175,9 @@ def main():
         accs_elm.append([q] + acc_elm)
     accs_elm = np.array(accs_elm)
     print(np.around(accs_elm, decimals=2))
+    return accs_elm
 
+def run_mlp(X, y, q_range):
     print(":: Evaluating MLP")
     print(":: Q | hold-out | 10-fold | leave-one-out")
     accs_mlp = []
@@ -156,6 +186,28 @@ def main():
         accs_mlp.append([q] + acc_mlp)
     accs_mlp = np.array(accs_mlp)
     print(np.around(accs_mlp, decimals=2))
+
+
+def run_perceptron(X, y):
+    print(":: Evaluating Perceptron")
+    print(":: hold-out | 10-fold | leave-one-out")
+    acc_perceptron = train_test_perceptron(X, y)
+    acc_perceptron = np.array(accs_perceptron)
+    print(np.around(accs_perceptron, decimals=2))
+
+
+
+def main():
+    print(__doc__)
+    np.random.seed(processing.SEED)
+    X, y = load.iris()
+    q_range = (3, 41, 5)
+    print(":: Q RANGE: ", q_range)
+    print()
+    run_perceptron(X, y)
+    # run_mlp(X, y, q_range)
+    # run_elm(X, y, q_range)
+
 
 
 if __name__ == '__main__':
