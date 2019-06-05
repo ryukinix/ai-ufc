@@ -127,7 +127,7 @@ dataset é o IRIS, clássico e canônico problema para classificação.
 Considerando os algoritmos Perceptron, MLP e ELM, nas tabelas a seguir
 é apresentado a performance dos modelos variando Q num passo de 5 no
 intervalo de \([3, 40]\). É apresentado cada coluna como a acurácia
-pelo método de validação descrito.
+pelo método de validação descrito de acordo com o tipo de rede neural.
 
 
 #+CAPTION: ELM
@@ -145,7 +145,7 @@ pelo método de validação descrito.
 |----+----------+---------+---------------|
 
 
-#+CAPION: MLP
+#+CAPTION: MLP
 |----+----------+---------+---------------|
 |  Q | HOLD-OUT | 10-FOLD | LEAVE-ONE-OUT |
 |----+----------+---------+---------------|
@@ -158,6 +158,13 @@ pelo método de validação descrito.
 | 33 |     0.96 |    0.97 |          0.97 |
 | 38 |     0.96 |    0.97 |          0.97 |
 |----+----------+---------+---------------|
+
+#+CAPTION: Perceptron
+|----------+---------+---------------|
+| HOLD-OUT | 10-FOLD | LEAVE-ONE-OUT |
+|----------+---------+---------------|
+|     0.89 |    0.81 |          0.82 |
+|----------+---------+---------------|
 
 
 * Apêndice
