@@ -56,26 +56,26 @@ f(x,y \) poderá ser consultada nos próximos gráficos.
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Gráfico de supérfice gerada por \( f(x, y) \). (WolframAlpha, https://bit.ly/2UCIphO)
-[[file:q1-3dplot.png]]
+[[file:pics/q1-3dplot.png]]
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Visualização com linhas de contorno, é possível observar os máximos nas temperaturas mais frias isoladas.
-[[file:q1-polos.png]]
+[[file:pics/q1-polos.png]]
 
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Máximo local 1.
-[[file:q1-local.png]]
+[[file:pics/q1-local.png]]
 
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Máximo local 2.
-[[file:q1-local2.png]]
+[[file:pics/q1-local2.png]]
 
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Máximo global no intervalo proposto encontrado pelo algoritmo /Hill Climbing/.
-[[file:q1-global.png]]
+[[file:pics/q1-global.png]]
 
 A variação dos máximos foram entre 18 e 36.09 em alguns experimentos
 rodados para o valor de \( f(x, y) \).  Como é possível perceber nos
@@ -170,26 +170,26 @@ R2aj:	 0.97367
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Regressões com grau de 2 a 5.
-[[file:q3-regression.png]]
+[[file:pics/q3-regression.png]]
 
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Comparação entre Regressão de grau 2 e 3: diferença relevante.
-[[file:q3-regression-2-3.png]]
+[[file:pics/q3-regression-2-3.png]]
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Comparação entre Regressão de grau  2 e 5: diferença muito relevante..
-[[file:q3-regression-2-5.png]]
+[[file:pics/q3-regression-2-5.png]]
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Comparação entre Regressão de grau 4 e 5: diferença pouco relevante..
-[[file:q3-regression-4-5.png]]
+[[file:pics/q3-regression-4-5.png]]
 
 
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Métricas para k=4 e k=5.
-[[file:q3-regression-metrics.png]]
+[[file:pics/q3-regression-metrics.png]]
 
 
 A fim de curiosidade, para \( k > 9 \) perde todo o sentido da
@@ -198,7 +198,7 @@ seguir um gráfico demonstrando essa afirmação.
 
 #+ATTR_LATEX: :placement [H]
 #+CAPTION: Para \( k > 9 \) até a regressão linear é um modelo melhor.
-[[file:q3-regression-nonsense.png]]
+[[file:pics/q3-regression-nonsense.png]]
 
 
 Portanto, para finalizar, ao analisar o vetor de \( R^{2}_{aj}(k) \) é possível concluir que o melhor
