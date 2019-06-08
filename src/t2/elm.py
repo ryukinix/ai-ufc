@@ -92,22 +92,23 @@ def predict(X, W, M, activation=None):
 
     return D.T
 
-
-def main():
-    print("-- Extreme Learning Machine")
-    np.random.seed(processing.SEED)
-    X, y = load.iris()
-    q = 20
+def eval_classification(X, y, q=20):
     X_train, X_test, y_train, y_test = testing.hold_out(X, y)
-    print("X_train shape: ", X_train.shape)
-    print("X_test shape: ", X_test.shape)
-    print("Q: ", q)
     W, M = train(X_train, y_train, q=q, activation=processing.sigmoid)
     D_teste = predict(X_test, W, M, activation=processing.sigmoid)
-
     y_test = processing.encode_label(y_test)
     y_pred = processing.encode_label(D_teste)
     acc = round(testing.accuracy(y_test, y_pred), ndigits=2)
+    return acc
+
+
+def main():
+    np.random.seed(processing.SEED)
+    X, y = load.iris()
+    acc = eval_classification(X, y)
+    print("-- Extreme Learning Machine")
+    print("X: ", X.shape)
+    print("y: ", y.shape)
     print("ACC: ", acc )
 
 
