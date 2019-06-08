@@ -88,9 +88,9 @@ def predict(X, W, M, activation=None):
     if activation is not None:
         Z = activation(Z)
     Z = processing.add_bias(Z, axis=0)
-    D = M @ Z
+    Y = M @ Z
 
-    return D.T
+    return Y.T
 
 def eval_classification(X, y, q=20):
     X_train, X_test, y_train, y_test = testing.hold_out(X, y)
