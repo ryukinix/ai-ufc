@@ -56,3 +56,8 @@ def iris():
     d = dataset('data/iris_log.dat')
     X, y = d[:, 0:4], d[:, -3:]
     return X, y
+
+def twomoons():
+    d = dataset('data/twomoons.dat')
+    X, y = d[:, 0:2], d[:, -1]
+    return X, y
