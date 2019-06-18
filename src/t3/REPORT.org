@@ -37,11 +37,16 @@ deverá ser ~0~.
 
 Partindo desse princípio, calcula-se os mínimos e máximos das features
 ~x1~ e ~x2~ do conjunto de dados ~twomoons.dat~ fornecido. A partir de
-tais valores, após o treinamento da rede neural ELM  é criado um espaço
-linear do produto cartesiano entre ~(x1, x2)~ gerando uma nova matriz
-de ~características~ a ser classificada.
+tais valores, após o treinamento da rede neural ELM é criado um espaço
+linear de 200 pontos do produto cartesiano entre ~(x1, x2)~, dessa
+maneira gerando uma nova matriz de ~características~ a ser
+classificada.
 
 Ao classificar tal matriz, estima-se com uma tolerância que os resultados
-não-truncados da rede com \( \abs{y} <= 0.1 \) pertença a curva
+não-truncados da rede com \( |y| < 0.05 \) pertença a curva
 separadora. A seguir é ilustrado um gráfico com todos os pontos por
 classe e a curva que os separada baseada na rede ELM.
+
+
+#+CAPTION: Curva Separada da Rede Neural ELM.
+[[file:pics/fit-curve.png]]

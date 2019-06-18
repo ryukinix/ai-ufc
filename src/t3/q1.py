@@ -41,7 +41,7 @@ def main():
     x1, x2 = X[:, 0], X[:, 1]
     x_min = min(min(x1), min(x2))
     x_max = max(max(x1), max(x2))
-    n = 500
+    n = 200
     linspace = np.linspace(x_min, x_max, n)
 
     points = []
@@ -54,7 +54,7 @@ def main():
     x1_curve = []
     x2_curve = []
     for yi, p in zip(y_elm, points):
-        if abs(yi) < 0.1:
+        if abs(yi) < 0.05:
             x1_curve.append(p[0])
             x2_curve.append(p[1])
 
