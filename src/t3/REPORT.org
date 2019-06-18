@@ -45,8 +45,14 @@ classificada.
 Ao classificar tal matriz, estima-se com uma tolerância que os resultados
 não-truncados da rede com \( |y| < 0.05 \) pertença a curva
 separadora. A seguir é ilustrado um gráfico com todos os pontos por
-classe e a curva que os separada baseada na rede ELM.
+classe e a curva que os separa baseada na rede ELM.
 
 
-#+CAPTION: Curva Separada da Rede Neural ELM.
+#+CAPTION: Curva Separada da Rede Neural ELM em preto. Vermelho=1, Azul=-1
 [[file:pics/fit-curve.png]]
+
+
+* TODO Q2
+
+
+* TODO Q3
