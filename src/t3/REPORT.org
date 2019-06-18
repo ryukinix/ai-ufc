@@ -1,0 +1,47 @@
+#+OPTIONS: toc:nil
+#+TITLE: Inteligência Computacional - T3@@latex:\\@@ Redes Neurais e Algorítimos Genéticos
+#+LANGUAGE: bt-br
+#+LATEX_HEADER: \usepackage[]{babel}
+#+AUTHOR: Manoel Vilela
+
+#+BEGIN_ABSTRACT
+
+Este relatório descreve soluções de problemas na área de Redes Neurais
+RBF e ELM, algorítmos genéticos. Este trabalho é a terceira avaliação
+prática da disciplina Inteligência Computacional na UFC do Campus de
+Sobral ministrada pelo professor Jarbas.
+
+#+END_ABSTRACT
+
+
+* Introdução
+
+A linguagem utilizada foi Python, compilador cPython versão 3.7 que
+pode ser encontrado no site [[https://www.python.org][www.python.org]]. A execução dos programas é
+direta. Cada questão é enumerada por ~q<n>.py~, na qual é possível
+executá-la por exemplo como ~python q1.py~.
+
+Talvez seja necessário instalar em seu ambiente algumas dependências
+externas com a ferramenta ~pip~. Ao abrir um terminal no diretório
+local da execução, assegure-se de executar:
+
+~pip install -r requirements.txt~
+
+
+* Q1
+
+Nessa questão a solução baseia-se no fundamento que a curva separadora
+de classe fica na fronteira numérica entre os extremos. Por exemplo,
+dado que as classes nesse problema são ~-1~ e ~1~ a fronteira da curva
+deverá ser ~0~.
+
+Partindo desse princípio, calcula-se os mínimos e máximos das features
+~x1~ e ~x2~ do conjunto de dados ~twomoons.dat~ fornecido. A partir de
+tais valores, após o treinamento da rede neural ELM  é criado um espaço
+linear do produto cartesiano entre ~(x1, x2)~ gerando uma nova matriz
+de ~características~ a ser classificada.
+
+Ao classificar tal matriz, estima-se com uma tolerância que os resultados
+não-truncados da rede com \( \abs{y} <= 0.1 \) pertença a curva
+separadora. A seguir é ilustrado um gráfico com todos os pontos por
+classe e a curva que os separada baseada na rede ELM.
