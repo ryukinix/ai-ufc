@@ -36,7 +36,11 @@ CONST_SCALE = 20/(2 ** (N_BITS//2) - 1)
 # Se verdadeiro imprime maiores detalhes durante a execução.
 VERBOSE = True
 
-MAX_ITERATIONS = 1000
+# DOC: Quantidade máxima de iterações
+MAX_ITERATIONS = 100
+
+# DOC: Probabilidade de mutação de um gêne para um indíviduo
+MUTATION_PROBABILITY = 0.005
 
 def f(x, y):
     """Função-objetiva para maximização."""
@@ -61,6 +65,11 @@ def decode(bits):
     x = bits_to_int(bits[:N_BITS//2]) * CONST_SCALE
     y = bits_to_int(bits[N_BITS//2:]) * CONST_SCALE
     return (x, y)
+
+def encode(bits):
+    """Codifica numa string a sequência de bits do indíviduo."""
+    fstring = "#0{}b".format(N_BITS)
+    return format(bits_to_int(bits), fstring)
 
 def evaluation(population):
     """Avalia a pontução de cada indíviduo da população.
@@ -141,7 +150,7 @@ def random_event(probability):
 
 
 
-def mutate(population, probability=0.005):
+def mutate(population, probability=MUTATION_PROBABILITY):
     """Mutação de indíviduos
 
     NOTA: SIDE-EFFECT!
@@ -214,7 +223,7 @@ def population_report(population, verbose=VERBOSE):
     max_evaluation = np.max(evaluations)
     min_evaluation = np.min(evaluations)
     x_best, y_best = decode(best_individual)
-    string_best_individual = bin(bits_to_int(best_individual))
+    string_best_individual = encode(best_individual)
     if verbose:
         print("MEAN: {:.4f}".format(mean))
         print(" STD: {:.4f}".format(std))
@@ -232,7 +241,7 @@ def main():
     reports = []
     i = 0
     while i <= MAX_ITERATIONS:
-        print("---- G E N E R A T I O N [{}] ---".format(i))
+        print("\n---- G E N E R A T I O N [{}] ---".format(i))
         report = population_report(population)
         reports.append(report)
         population = evolution_step(population)
