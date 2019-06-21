@@ -37,7 +37,7 @@ CONST_SCALE = 20/(2 ** (N_BITS//2) - 1)
 VERBOSE = True
 
 # DOC: Quantidade máxima de iterações
-MAX_ITERATIONS = 100
+MAX_ITERATIONS = 50
 
 # DOC: Probabilidade de mutação de um gêne para um indíviduo
 MUTATION_PROBABILITY = 0.005
@@ -106,6 +106,7 @@ def crossover(population):
     np.random.shuffle(population)
 
     # remove a última coluna com pontuação
+    # FIXME: isso deve ser feito em selection não aqui!
     population = population[:, :-1]
 
     children = []
@@ -181,6 +182,7 @@ def mutate(population, probability=MUTATION_PROBABILITY):
 def selection(population_scored):
     """Roleta RUSSA VICIADA. Quem é mais apto tem mais chance de sobreviver."""
     evaluations = population_scored[:, -1]
+
     return population_scored
 
 def evolution_step(population):
@@ -208,7 +210,7 @@ def evolution_step(population):
     new_population = mutate(crossover(best_individuals))
     return new_population
 
-def population_report(population, verbose=VERBOSE):
+def population_report(i, population, verbose=VERBOSE):
     """Extrai métricas da população e a melhor solução atual"""
     # get best individual
     population_scored = evaluation(population)
@@ -232,7 +234,7 @@ def population_report(population, verbose=VERBOSE):
         print("BEST_INDIVIDUAL: ", string_best_individual)
         print("  BEST_SOLUTION: ({:.4f}, {:.4f})".format(x_best, y_best))
 
-    return [x_best, y_best, mean, std, min_evaluation, max_evaluation]
+    return [i, x_best, y_best, mean, std, min_evaluation, max_evaluation]
 
 
 def main():
@@ -242,7 +244,7 @@ def main():
     i = 0
     while i <= MAX_ITERATIONS:
         print("\n---- G E N E R A T I O N [{}] ---".format(i))
-        report = population_report(population)
+        report = population_report(i, population)
         reports.append(report)
         population = evolution_step(population)
 
@@ -252,13 +254,16 @@ def main():
     _, columns = solutions.shape
     evaluation_idx = solutions[:, columns - 1].argsort()
     solutions_sorted = solutions[evaluation_idx]
-    x = solutions_sorted[-1, 0]
-    y = solutions_sorted[-1, 1]
+    best_i = solutions_sorted[-1, 0]
+    x = solutions_sorted[-1, 1]
+    y = solutions_sorted[-1, 2]
     fxy = solutions_sorted[-1, columns - 1]
 
     print("------ B E S T -- S O L U T I O N ------")
     print("(x, y) = ({:.4f}, {:.4f})".format(x, y))
     print("f(x,y) = {:.4f}".format(fxy))
+    print("Best generation = {}".format(int(best_i)))
+
 
 
 
