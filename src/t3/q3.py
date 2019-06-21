@@ -37,7 +37,7 @@ CONST_SCALE = 20/(2 ** (N_BITS//2) - 1)
 VERBOSE = True
 
 # DOC: Quantidade máxima de iterações
-MAX_ITERATIONS = 50
+MAX_ITERATIONS = 100
 
 # DOC: Probabilidade de mutação de um gêne para um indíviduo
 MUTATION_PROBABILITY = 0.005
@@ -105,10 +105,6 @@ def crossover(population):
 
     np.random.shuffle(population)
 
-    # remove a última coluna com pontuação
-    # FIXME: isso deve ser feito em selection não aqui!
-    population = population[:, :-1]
-
     children = []
     queue = list(population)
     while queue:
@@ -169,21 +165,39 @@ def mutate(population, probability=MUTATION_PROBABILITY):
     population: numpy.ndarray(shape=(POPULATION_SIZE, N_BITS))
     - matriz de indíviduos após a operação aleatória de mutação.
     """
+    fstring = "[MUTATION] individual({}) gene({}) swapped from {} to {}"
     for i in range(len(population)):
         if random_event(probability):
           j = np.random.randint(0, N_BITS)
           gene = int(population[i][j])
           new_gene = int(1 - gene)
           population[i][j] = new_gene
-          print("[MUTATION] individual({}) gene({}) swapped from {} to {}".format(i, j, gene, new_gene))
+          if VERBOSE:
+              print(fstring.format(i, j, gene, new_gene))
     return population
 
 
 def selection(population_scored):
     """Roleta RUSSA VICIADA. Quem é mais apto tem mais chance de sobreviver."""
     evaluations = population_scored[:, -1]
+    probability = evaluations/sum(evaluations)
+    population = population_scored[:, :-1]
+    natural_selection = np.empty(shape=(POPULATION_SIZE, N_BITS))
+    # define a precisão da roleta
+    roleta_size = 1000
+    roleta = []
 
-    return population_scored
+    # CRIA ROLETA COM VIÉS SOBRE A PONTUAÇÃO DO INDIVÍDUO
+    for idx, c in enumerate(roleta_size * probability):
+        for _ in range(math.ceil(c)):
+            roleta.append(population[idx])
+
+    for i in range(POPULATION_SIZE):
+        event = np.random.randint(roleta_size)
+        selected = roleta[event]
+        natural_selection[i] = selected
+
+    return natural_selection
 
 def evolution_step(population):
     """Núcleo do algoritmo genético: realiza um passo evolutivo.
@@ -210,7 +224,7 @@ def evolution_step(population):
     new_population = mutate(crossover(best_individuals))
     return new_population
 
-def population_report(i, population, verbose=VERBOSE):
+def population_report(i, population):
     """Extrai métricas da população e a melhor solução atual"""
     # get best individual
     population_scored = evaluation(population)
@@ -226,7 +240,8 @@ def population_report(i, population, verbose=VERBOSE):
     min_evaluation = np.min(evaluations)
     x_best, y_best = decode(best_individual)
     string_best_individual = encode(best_individual)
-    if verbose:
+    if VERBOSE:
+        print("\n---- G E N E R A T I O N [{}] ---".format(i))
         print("MEAN: {:.4f}".format(mean))
         print(" STD: {:.4f}".format(std))
         print(" MAX: {:.4f}".format(max_evaluation))
@@ -236,14 +251,22 @@ def population_report(i, population, verbose=VERBOSE):
 
     return [i, x_best, y_best, mean, std, min_evaluation, max_evaluation]
 
+def description():
+    print(__doc__)
+    print("--- P A R A M E T E R S ---")
+    print("N_BITS: ", N_BITS)
+    print("POPULATION_SIZE: ", POPULATION_SIZE)
+    print("SELECTION: ROLETA")
+    print("CROSSOVER: 1-cut point")
+    print("MUTATION PROBABILITY: ", MUTATION_PROBABILITY)
+    print("VERBOSE: ", VERBOSE)
 
 def main():
-    print(__doc__)
+    description()
     population = random_population()
     reports = []
     i = 0
     while i <= MAX_ITERATIONS:
-        print("\n---- G E N E R A T I O N [{}] ---".format(i))
         report = population_report(i, population)
         reports.append(report)
         population = evolution_step(population)
