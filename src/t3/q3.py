@@ -10,11 +10,11 @@
 
 
 """---- G E N E T I C  --  A L G O R I T H M S ----
-O indíviduo possui 20 bits tal que 10 bits para x e 10 bits para y.  A
-função objetiva f deve ser maximizada tal que (x, y) pertence a
-subfaixa [0, 20] do conjunto R².
+O indíviduo possui 20 bits tal que 10 bits é reservado para x e 10
+bits para y.  A função objetiva f deve ser maximizada tal que a tupla
+(x, y) pertença a subfaixa [0, 20] no conjunto R².
 
-f(x, y) = |x * sin(y * (pi/4)) + y * sin(x * (pi/4)))|
+f(x, y) = |x * sin(y * (pi/4)) + y * sin(x * (pi/4))|
 """
 
 import math
