@@ -25,12 +25,15 @@ POPULATION_SIZE = 100
 CONST_SCALE = 20/(2 ** (N_BITS//2) - 1)
 
 def f(x, y):
+    """Função-objetiva para maximização"""
     return abs(x * math.sin(y * ((math.pi)/4)) + y * math.sin(x * ((math.pi)/4)))
 
 def random_population(size=POPULATION_SIZE):
+    """Gera uma população aleatória de tamamho 'size'."""
     return np.random.random_integers(0, 1, (size, N_BITS)).astype('float')
 
 def bits_to_int(bits):
+    """Recebe uma sequência de bits e codifica em um número decimal."""
     n = len(bits)
     integer = 0
     for i, b in enumerate(bits):
@@ -113,6 +116,15 @@ def selection(population_augmented):
     return population_augmented
 
 def evolution_step(population):
+    """Núcleo do algoritmo genético: realiza um passo evolutivo.
+
+    Passos:
+    1. Avaliação
+    2. Seleção
+    3. CrossOver
+    4. Mutação
+
+    """
     # EVOLUTION
     population_scored = evaluation(population)
     best_individuals = selection(population_scored)
@@ -120,6 +132,7 @@ def evolution_step(population):
     return new_population
 
 def population_report(population, verbose=True):
+    """Extrai métricas da população e a melhor solução atual"""
     # get best individual
     population_scored = evaluation(population)
     evaluations = population_scored[:, N_BITS]
