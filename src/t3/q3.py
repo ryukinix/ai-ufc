@@ -19,6 +19,7 @@ f(x, y) = |x * sin(y * (pi/4)) + y * sin(x * (pi/4))|
 
 import math
 import numpy as np
+import sys
 
 # DOC: quantidade de bits do indíviduo
 # aumente para ter uma maior precisão na casa decimal (sempre um número par).
@@ -34,7 +35,7 @@ CONST_SCALE = 20/(2 ** (N_BITS//2) - 1)
 
 # DOC: parâmetro de verbosidade do programa
 # Se verdadeiro imprime maiores detalhes durante a execução.
-VERBOSE = True
+VERBOSE = False
 
 # DOC: Quantidade máxima de iterações
 MAX_ITERATIONS = 100
@@ -261,7 +262,14 @@ def description():
     print("MUTATION PROBABILITY: ", MUTATION_PROBABILITY)
     print("VERBOSE: ", VERBOSE)
 
+def parse_flags():
+    global VERBOSE
+    for flag in sys.argv[1:]:
+        if flag == '-v' or flag == '--verbose':
+            VERBOSE = True
+
 def main():
+    parse_flags()
     description()
     population = random_population()
     reports = []
