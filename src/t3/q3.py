@@ -49,7 +49,7 @@ def f(x, y):
 
 def random_population(size=POPULATION_SIZE):
     """Gera uma população aleatória de tamamho 'size'."""
-    return np.random.random_integers(0, 1, (size, N_BITS)).astype('float')
+    return np.random.randint(0, 1+1, (size, N_BITS)).astype('float')
 
 def bits_to_int(bits):
     """Recebe uma sequência de bits e codifica em um número decimal"""
