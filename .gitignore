@@ -5,6 +5,7 @@
 /docs/slides
 *.out
 
+*.zip
 *.fdb_latexmk
 *.fls
 *.pyc
