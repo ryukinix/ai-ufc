@@ -16,10 +16,11 @@ Sobral ministrada pelo professor Jarbas.
 
 * Introdução
 
-A linguagem utilizada foi Python, compilador cPython versão 3.7 que
-pode ser encontrado no site [[https://www.python.org][www.python.org]]. A execução dos programas é
-direta. Cada questão é enumerada por ~q<n>.py~, na qual é possível
-executá-la por exemplo como ~python q1.py~.
+A linguagem utilizada foi Python, testado com o compilador cPython
+versão 3.6 e 3.7, na qual pode ser encontrado no /site/
+[[https://www.python.org][www.python.org]]. A execução dos programas é direta. Cada questão é
+enumerada por ~q<n>.py~, na qual é possível executá-la por exemplo
+como ~python q1.py~.
 
 Talvez seja necessário instalar em seu ambiente algumas dependências
 externas com a ferramenta ~pip~. Ao abrir um terminal no diretório
@@ -28,7 +29,8 @@ local da execução, assegure-se de executar:
 ~pip install -r requirements.txt~
 
 
-* Q1
+* DONE Q1
+  CLOSED: [2019-06-21 Fri 21:06]
 
 Nessa questão a solução baseia-se no fundamento que a curva separadora
 de classe fica na fronteira numérica entre os extremos. Por exemplo,
@@ -42,10 +44,12 @@ linear de 200 pontos do produto cartesiano entre ~(x1, x2)~, dessa
 maneira gerando uma nova matriz de ~características~ a ser
 classificada.
 
-Ao classificar tal matriz, estima-se com uma tolerância que os resultados
-não-truncados da rede com \( |y| < 0.05 \) pertença a curva
-separadora. A seguir é ilustrado um gráfico com todos os pontos por
-classe e a curva que os separa baseada na rede ELM.
+Ao classificar tal matriz, estima-se com uma tolerância fixa que os
+resultados não-truncados da rede tal que \( |y| < 0.05 \) pertença a
+curva separadora. A seguir é ilustrado um gráfico com todos os pontos
+gerados nesse espaço, colorizado por classe e a curva que os separam
+baseado na rede ELM.
+
 
 
 #+CAPTION: Curva Separada da Rede Neural ELM em preto. ~Vermelho=1~, ~Azul=-1~.
@@ -55,22 +59,23 @@ classe e a curva que os separa baseada na rede ELM.
 * TODO Q2
 
 
-* IN-PROGRESS Q3
+* DONE Q3
+  CLOSED: [2019-06-21 Fri 21:06]
 
 Questão embora simples, bastante interessante para exercitar os
 conceitos de algorítmos genéticos. O fluxo geral de execução segue:
 
-1. Criação de uma população aleatória de 100
-2. Avaliação da população sobre a função-objetiva
+1. Criação de uma população inicial pseudo-aleatória de 100 indíviduos;
+2. Avaliação da população sobre a função-objetiva;
 3. Seleção de indíviduos por uma roleta viciada parametrizada pela
-   aptidão
+   aptidão;
 4. Cruzamento dos indíviduos com algoritmo de corte de um ponto;
-5. Mutação com taxa de 0.005;
-6. Defina tal população como nova geração;
+5. Mutação com taxa probabilística de 0.5%;
+6. Defina esta população como a nova geração;
 7. Verifique se a condição de parada foi alcançada;
 8. Pule para o passo 2.
 
-Como exemplo a seguir está a saída do programa para as configurações padrões.
+Como exemplo, a seguir está a saída do programa para as configurações padrões.
 
 #+BEGIN_EXAMPLE
 ---- G E N E T I C  --  A L G O R I T H M S ----
