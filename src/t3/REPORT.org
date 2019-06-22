@@ -1,5 +1,6 @@
+#+STARTUP: latexpreview
 #+OPTIONS: toc:nil todo:nil
-#+TITLE: Inteligência Computacional - T3@@latex:\\@@ Redes Neurais e Algorítimos Genéticos
+#+TITLE: Inteligência Computacional - T3@@latex:\\@@ Redes Neurais e Algorítmos Genéticos
 #+LANGUAGE: bt-br
 #+LATEX_HEADER: \usepackage[]{babel}
 #+AUTHOR: Manoel Vilela
@@ -7,57 +8,104 @@
 #+BEGIN_ABSTRACT
 
 Este relatório descreve soluções de problemas na área de Redes Neurais
-RBF e ELM, algorítmos genéticos. Este trabalho é a terceira avaliação
-prática da disciplina Inteligência Computacional na UFC do Campus de
-Sobral ministrada pelo professor Jarbas.
+e Algoritmos Genéticos. As Redes Neurais exploradas são Radial Base
+Function (RBF) e Extreme Learning Machine (ELM). Este trabalho é a
+terceira avaliação prática da disciplina Inteligência Computacional na
+UFC do Campus de Sobral ministrada pelo professor Jarbas.
 
 #+END_ABSTRACT
 
 
 * Introdução
 
-A linguagem utilizada foi Python, testado com o compilador cPython
+A linguagem utilizada foi Python, testado com o compilador ~cPython~
 versão 3.6 e 3.7, na qual pode ser encontrado no /site/
 [[https://www.python.org][www.python.org]]. A execução dos programas é direta. Cada questão é
 enumerada por ~q<n>.py~, na qual é possível executá-la por exemplo
 como ~python q1.py~.
 
-Talvez seja necessário instalar em seu ambiente algumas dependências
-externas com a ferramenta ~pip~. Ao abrir um terminal no diretório
-local da execução, assegure-se de executar:
+É provável que seja necessário instalar em seu ambiente algumas
+dependências externas com a ferramenta ~pip~. Ao abrir um terminal no
+diretório local da execução, assegure-se de executar:
 
 ~pip install -r requirements.txt~
 
+As bibliotecas de Python utilizadas são /NumPy/ (Processamento
+Numérico) e /matplotlib/ (Geração de Gráficos).
 
 * DONE Q1
   CLOSED: [2019-06-21 Fri 21:06]
 
-Nessa questão a solução baseia-se no fundamento que a curva separadora
-de classe fica na fronteira numérica entre os extremos. Por exemplo,
-dado que as classes nesse problema são ~-1~ e ~1~ a fronteira da curva
-deverá ser ~0~.
+Nesta questão a solução baseia-se no fundamento que a curva separadora
+fica no valor médio entre os valores das classes. Por exemplo, dado
+que as classes nesse problema são ~-1~ e ~1~ a fronteira da curva
+deverá ser ~0~ pois este é a média.
 
 Partindo desse princípio, calcula-se os mínimos e máximos das features
 ~x1~ e ~x2~ do conjunto de dados ~twomoons.dat~ fornecido. A partir de
 tais valores, após o treinamento da rede neural ELM é criado um espaço
-linear de 200 pontos do produto cartesiano entre ~(x1, x2)~, dessa
-maneira gerando uma nova matriz de ~características~ a ser
+linear de 200 pontos do produto cartesiano entre ~(x1, x2)~, de tal
+maneira que é gerado uma nova matriz de ~características~ a ser
 classificada.
 
-Ao classificar tal matriz, estima-se com uma tolerância fixa que os
-resultados não-truncados da rede tal que \( |y| < 0.05 \) pertença a
-curva separadora. A seguir é ilustrado um gráfico com todos os pontos
-gerados nesse espaço, colorizado por classe e a curva que os separam
-baseado na rede ELM.
+Ao classificar a matriz gerada, estima-se com uma tolerância fixa que
+os resultados não-truncados da rede pertença a curva separadora, nesse
+caso a tolerância sendo \( |y| < 0.05 \) . Por fim, é ilustrado um
+gráfico com todos os pontos gerados nesse espaço, colorizado por
+classe e a curva que os separam baseado na rede ELM.
 
+#+BEGIN_EXAMPLE
+-- Extreme Learning Machine
+X.shape:  (1001, 2)
+y.shape:  (1001,)
+W.shape: (10, 3)
+M.shape:  (1, 11)
+ACC=99.00%
+#+END_EXAMPLE
 
 
 #+CAPTION: Curva Separada da Rede Neural ELM em preto. ~Vermelho=1~, ~Azul=-1~.
 [[file:pics/fit-curve.png]]
 
+* DONE Q2
+  CLOSED: [2019-06-21 Fri 22:59]
 
-* TODO Q2
 
+Esta questão foca-se no aspecto funcional da Rede Neural RBF. As
+principais diferença entre esta rede e uma rede ELM é:
+
++ a computação dos neurônios ocultos não é um /perceptron/, mas um
+  neurônio gaussiano que computa a distância euclidiana sobre um
+  centróide escolhido  [fn:1].
++ A matriz de pesos da camada oculta é unitária
+
+#+BEGIN_LATEX latex
+  \begin{equation}
+  \phi(\vec{x}, \vec{t}) = e^|{\vec{x}-\vec{t}|
+  \end{equation}
+#+END_LATEX
+
+#+BEGIN_EXAMPLE
+-- RBF Neural Network
+Experiments:  50
+    X.shape:  (150, 4)
+    y.shape:  (150, 3)
+  Mean(ACC):  0.9272
+   Std(ACC):  0.070881309243
+   Max(ACC):  1.0
+   Min(ACC):  0.63
+#+END_EXAMPLE
+
+O algoritmo com 50 experimentos de hold-out com separação 80/20
+comporta-se bem em média. No entanto é visto que a acurácia mínima é
+baixa, muito provavelmente devido ao fato de a seleção de centróides
+ser aleatória. Uma melhoria possível seria utilizar um algoritmo
+melhor para estimar os centróides nesta etapa. A acurácia média do
+algoritmo no /dataset/ IRIS é de 93% acurácia.
+
+[fn:1] Poderia ser estimado de maneira óptima com o algoritmo
+/K-means/ tal que \( K = q \), no entanto por questões de limitação de
+tempo, decidiu-se adotar uma técnica mais trivial.
 
 * DONE Q3
   CLOSED: [2019-06-21 Fri 21:06]
@@ -99,9 +147,9 @@ Best generation = 27
 #+END_EXAMPLE
 
 
-Caso queira-se ver detalhes de média, desvio-padrão e outras métricas
+Caso queira-se ver os detalhes de média, desvio-padrão e outras métricas
 por geração, execute o programa com ~VERBOSE=True~. Opcionalmente
-pode-se executar como:
+pode-se passar como parâmetro na linha de comando, executando o programa como:
 
 #+BEGIN_EXAMPLE
 python q3.py --verbose

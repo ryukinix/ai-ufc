@@ -8,7 +8,7 @@
 #      @email: manoel_vilela@engineer.com
 #
 
-"""Rede Neural RBF
+"""-- RBF Neural Network
 
 Um algoritmo baseado em redes neurais e mínimos quadrados.
 Os pesos da camada oculta são unitários.
@@ -122,14 +122,15 @@ def main():
     for e in range(experiments):
         accs[e] = eval_classification(X, y)
 
-    print("-- Rede Neural RBF")
+    print(__doc__)
+    print("-- Parameters / Results --")
     print("Experiments: ", experiments)
-    print("X: ", X.shape)
-    print("y: ", y.shape)
-    print("Mean(ACC): ", accs.mean())
-    print("Std(ACC): ", accs.std())
-    print("Max(ACC): ", accs.max())
-    print("Min(ACC): ", accs.min())
+    print("    X.shape: ", X.shape)
+    print("    y.shape: ", y.shape)
+    print("  Mean(ACC): ", accs.mean())
+    print("   Std(ACC): ", accs.std())
+    print("   Max(ACC): ", accs.max())
+    print("   Min(ACC): ", accs.min())
 
 
 if __name__ == '__main__':

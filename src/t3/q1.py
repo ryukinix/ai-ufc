@@ -21,9 +21,8 @@ step = np.vectorize(lambda x: 1 if x >= 0 else -1)
 colorize = np.vectorize(lambda x: 'r' if x == 1 else 'b')
 
 def main():
-
     # Train / test ELM
-    print("\n-- Extreme Learning Machine")
+    print("-- Extreme Learning Machine")
     X, y = load.twomoons()
     q = 10
     (X_train, X_test, y_train, y_test) = testing.hold_out(X, y)
@@ -33,6 +32,8 @@ def main():
     acc = round(testing.accuracy(y_test, y_pred), ndigits=2)
 
     acc_text = "ACC={:.2f}%".format(acc * 100)
+    print("X.shape: ", X.shape)
+    print("y.shape: ", y.shape)
     print("W.shape:", W.shape)
     print("M.shape: ", M.shape)
     print(acc_text)
