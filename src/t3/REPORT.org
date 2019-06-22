@@ -1,4 +1,4 @@
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:nil todo:nil
 #+TITLE: Inteligência Computacional - T3@@latex:\\@@ Redes Neurais e Algorítimos Genéticos
 #+LANGUAGE: bt-br
 #+LATEX_HEADER: \usepackage[]{babel}
@@ -48,11 +48,56 @@ separadora. A seguir é ilustrado um gráfico com todos os pontos por
 classe e a curva que os separa baseada na rede ELM.
 
 
-#+CAPTION: Curva Separada da Rede Neural ELM em preto. Vermelho=1, Azul=-1
+#+CAPTION: Curva Separada da Rede Neural ELM em preto. ~Vermelho=1~, ~Azul=-1~.
 [[file:pics/fit-curve.png]]
 
 
 * TODO Q2
 
 
-* TODO Q3
+* IN-PROGRESS Q3
+
+Questão embora simples, bastante interessante para exercitar os
+conceitos de algorítmos genéticos. O fluxo geral de execução segue:
+
+1. Criação de uma população aleatória de 100
+2. Avaliação da população sobre a função-objetiva
+3. Seleção de indíviduos por uma roleta viciada parametrizada pela
+   aptidão
+4. Cruzamento dos indíviduos com algoritmo de corte de um ponto;
+5. Mutação com taxa de 0.005;
+6. Defina tal população como nova geração;
+7. Verifique se a condição de parada foi alcançada;
+8. Pule para o passo 2.
+
+Como exemplo a seguir está a saída do programa para as configurações padrões.
+
+#+BEGIN_EXAMPLE
+---- G E N E T I C  --  A L G O R I T H M S ----
+O indíviduo possui 20 bits tal que 10 bits é reservado para x e 10
+bits para y.  A função objetiva f deve ser maximizada tal que a tupla
+(x, y) pertença a subfaixa [0, 20] no conjunto R².
+
+f(x, y) = |x * sin(y * (pi/4)) + y * sin(x * (pi/4))|
+
+--- P A R A M E T E R S ---
+N_BITS:  20
+POPULATION_SIZE:  100
+SELECTION: ROLETA
+CROSSOVER: 1-cut point
+MUTATION PROBABILITY:  0.005
+VERBOSE:  False
+------ B E S T -- S O L U T I O N ------
+(x, y) = (18.0841, 18.1036)
+f(x,y) = 36.0884
+Best generation = 27
+#+END_EXAMPLE
+
+
+Caso queira-se ver detalhes de média, desvio-padrão e outras métricas
+por geração, execute o programa com ~VERBOSE=True~. Opcionalmente
+pode-se executar como:
+
+#+BEGIN_EXAMPLE
+python q3.py --verbose
+#+END_EXAMPLE
