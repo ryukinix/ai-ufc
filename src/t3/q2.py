@@ -23,8 +23,23 @@ import load
 import processing
 import testing
 
+Q = 10
+TEST_SIZE = 0.2
 
-def train(X, y, q=10, activation=None):
+def phi(X, T):
+    """Neurônio RBF da camada oculta"""
+    n, _ = X.shape
+    q, p = T.shape
+    matrix = np.zeros(shape=(n, q))
+    for i in range(n):
+        x = X[i]
+        for j in range(q):
+            t = T[j]
+            matrix[i][j] = np.exp(np.linalg.norm(x - t))
+
+    return matrix
+
+def train(X, y, q=Q, activation=None):
     """Algoritmo de treinamento para Rede Neural RBF
 
     Parâmetros
@@ -35,36 +50,44 @@ def train(X, y, q=10, activation=None):
 
     Return
     ------
-    W: pesos aleatórios da camada oculta
+    T: Centróides da camada oculta com tamanho q
+    G: Matriz de pesos da camada de saída.
+
 
     """
     # rótulos
-    # torna vetor linha em coluna
     n, p = X.shape
-    D = y.T
+    index = np.arange(0, n - 1)
+    D = y
 
-    # training
-    # Pesos aleatórios da camada oculta
-    W = np.random.randn(q, p+1)
+
     # Adicionar bias
     X = processing.add_bias(X)
+
+    # training
+    # Centróides aleatórios da camada oculta
+    T = X[np.random.choice(index, q)]
+
     # Calcular saída da camada oculta
-    Z = W @ X.T
+    PHI = phi(X, T)
     if activation is not None:
-        Z = activation(Z)
-    Z = processing.add_bias(Z, axis=0)
-    # Calcular pesos M para camada de saída (aprendizado)
+        PHI = activation(PHI)
+    PHI = processing.add_bias(PHI, axis=1)
+    # Calcular pesos G para camada de saída (aprendizado)
     # Utiliza-se mínimos quadrados
-    M = D @ (Z.T @ (np.linalg.inv(Z @ Z.T)))
+    # FIXME: G = D @ (PHI.T @ (np.linalg.inv(PHI @ PHI.T)))
+    # Singular Matrix! Usando mínimos quadrados optimizados do Numpy
+    G, *_ = np.linalg.lstsq(PHI, D)
 
-    return W, M
+    return T, G.T
 
 
-def predict(X, W, G, activation=None):
+def predict(X, T, G, activation=None):
     """Algoritmo de predição para ELM (Extreme Learning Machine)
 
     Parâmetros
     ----------
+    T: Centróides da camada oculta
     G: Vetor de pesos da camada de saída para
 
     Return
@@ -73,18 +96,18 @@ def predict(X, W, G, activation=None):
 
     """
     X = processing.add_bias(X)
-    Z = W @ X.T
+    PHI = phi(X, T)
     if activation is not None:
-        Z = activation(Z)
-    Z = processing.add_bias(Z, axis=0)
-    Y = G @ Z
+        PHI = activation(PHI)
+    PHI = processing.add_bias(PHI, axis=1)
+    Y = G @ PHI.T
 
     return Y.T
 
-def eval_classification(X, y, q=10):
-    X_train, X_test, y_train, y_test = testing.hold_out(X, y, test_size=0.2)
-    W, M = train(X_train, y_train, q=q, activation=processing.sigmoid)
-    D_teste = predict(X_test, W, M, activation=processing.sigmoid)
+def eval_classification(X, y, q=Q):
+    X_train, X_test, y_train, y_test = testing.hold_out(X, y, test_size=TEST_SIZE)
+    T, G = train(X_train, y_train, q=q, activation=processing.sigmoid)
+    D_teste = predict(X_test, T, G, activation=processing.sigmoid)
     y_test = processing.encode_label(y_test)
     y_pred = processing.encode_label(D_teste)
     acc = round(testing.accuracy(y_test, y_pred), ndigits=2)
@@ -104,6 +127,7 @@ def main():
     print("X: ", X.shape)
     print("y: ", y.shape)
     print("Mean(ACC): ", accs.mean())
+    print("Std(ACC): ", accs.std())
     print("Max(ACC): ", accs.max())
     print("Min(ACC): ", accs.min())
 
